@@ -152,12 +152,11 @@ def get_logger(self):
 ```
 
 # 三、功能与使用
-## 3.1 填写cookie
-开始采集前，先把自己的cookie值填入cookie.txt文件。
-cookie获取说明：
-![cookie获取方法](https://files.mdnice.com/user/32110/b7ae2717-c188-49c7-806d-f87f6133d565.png)
+## 3.1 一键配置cookie
+开始采集前，先用内置的《cookie小工具》自动配置好cookie。
+![7c14954d150d91af132bc7d82bb64cc3](https://github.com/user-attachments/assets/d7ade547-18d9-4d49-9a46-c7103e2b8ed3)
 
-然后把复制的cookie值填写到当前文件夹的cookie.txt文件中。
+这样，获取到的cookie值就自动写入cookie.txt文件中了，告别繁琐的手动获取。
 ## 3.2 软件登录
 用户登录界面：需要登录。
 ## 3.3 启动采集
