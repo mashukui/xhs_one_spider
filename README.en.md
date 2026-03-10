@@ -1,6 +1,6 @@
 # xhs_one_spider - Xiaohongshu Aggregator Spider
 
-**Author:** @马哥python说
+**Author:** [@马哥python说](https://github.com/mashukui)
 
 ---
 <p align="center">
