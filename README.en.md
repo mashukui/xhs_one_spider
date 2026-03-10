@@ -3,6 +3,9 @@
 **Author:** @马哥python说
 
 ---
+<p align="center">
+<a href="README.md">简体中文</a> | <a href="README.en.md">English</a>
+</p>
 
 ## Overview
 
@@ -31,35 +34,45 @@ While these tools were stable and comprehensive, some users reported that having
 ### Feature 1: Search Notes and Comments Collection
 
 **Collection Interface:**
+<img width="1440" height="1191" alt="image" src="https://github.com/user-attachments/assets/8c217c43-e3e3-4786-bb15-f2d148feb6b5" />
 
 **Collected Note Data** (19 fields):
-- Keyword, Serial Number, Note ID, Note Link, Long Note Link, Cover Image Link, Note Type, User ID, User Profile Link, User Nickname, Like Count, Note Title, Note Content, Favorite Count, Comment Count, Share Count, Publish Time, Modify Time, IP Location
+Keyword, Serial Number, Note ID, Note Link, Long Note Link, Cover Image Link, Note Type, User ID, User Profile Link, User Nickname, Like Count, Note Title, Note Content, Favorite Count, Comment Count, Share Count, Publish Time, Modify Time, IP Location
+<img width="1440" height="682" alt="image" src="https://github.com/user-attachments/assets/57924bc8-94f3-4407-b40d-9c08423da550" />
 
 **Collected Comment Data** (11 fields):
-- Note Link, Long Note Link, Page Number, Commenter Nickname, Commenter ID, Commenter Profile Link, Comment Time, Comment IP Location, Comment Like Count, Comment Level, Comment Content
+Note Link, Long Note Link, Page Number, Commenter Nickname, Commenter ID, Commenter Profile Link, Comment Time, Comment IP Location, Comment Like Count, Comment Level, Comment Content
+<img width="2776" height="1310" alt="image" src="https://github.com/user-attachments/assets/d2fa2084-8821-4ba5-97ec-d69f7254ca71" />
 
 **Automatic Download of Search Result Images:**
+<img width="1440" height="946" alt="image" src="https://github.com/user-attachments/assets/9ad1a902-0d43-4a63-86b1-c0976c9de22b" />
 
 ---
 
 ### Feature 2: Collect Notes by Creator Profile Link
 
 **Collection Interface:**
+<img width="1440" height="1191" alt="image" src="https://github.com/user-attachments/assets/27d4da31-bd89-418c-90e0-adc05602be93" />
 
 **Collected Creator Notes** (18 fields):
 - Author Nickname, Author ID, Author Link, Page Number, Note Title, Note ID, Note Link, Long Note Link, Cover Image Link, Note Type, Like Count, Favorite Count, Comment Count, Share Count, Note Content, Publish Time, Modify Time, IP Location
+<img width="1440" height="689" alt="image" src="https://github.com/user-attachments/assets/e0c800f1-9ae2-4644-8827-31ec1e50a57a" />
 
 **Collected Creator Note Images:**
+<img width="1440" height="969" alt="image" src="https://github.com/user-attachments/assets/4bdc68e4-67be-4fa8-a8be-f128ec30fd7f" />
 
 ---
 
 ### Feature 3: Link and ID Conversion
 
 **Conversion 1: Home Page Link → Xiaohongshu ID**
+<img width="1440" height="1191" alt="image" src="https://github.com/user-attachments/assets/9c0f6c2b-05ce-440c-a69d-cba52db7f4a0" />
 
 **Conversion 2: Xiaohongshu ID → Home Page Link (with UID)**
+<img width="1440" height="1191" alt="image" src="https://github.com/user-attachments/assets/7b44e382-8f42-4432-b927-ed4451a2d239" />
 
 **Conversion 3: App Link → PC Link**
+<img width="1440" height="1191" alt="image" src="https://github.com/user-attachments/assets/2dbc4738-bf97-4deb-b0e0-effdb1d64679" />
 
 ---
 
@@ -207,6 +220,7 @@ def get_logger(self):
 
 **Option 3: Manual Setup**
 - After payment, add WeChat (493882434) to connect
+<img width="2324" height="604" alt="image" src="https://github.com/user-attachments/assets/ff593976-e588-4126-8fd4-17d3154ccba1" />
 
 ---
 
@@ -223,6 +237,7 @@ This software is independently developed and maintained by me, with long-term up
 
 **Official Account:** "老男孩的平凡之路"
 **Reply "爬小红书聚合软件" (Xiaohongshu Aggregator Spider) in the account's backend to get the latest installation package.**
+<img width="1938" height="364" alt="image" src="https://github.com/user-attachments/assets/af125187-8217-42a3-bc86-d32df25f3e88" />
 
 ---
 
