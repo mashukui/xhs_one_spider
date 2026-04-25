@@ -210,17 +210,9 @@ def get_logger(self):
 | Quarterly Pass | 3 months | ¥399 | Multiple | Medium-term collection needs |
 | Annual Pass | 1 year | ¥799 | Multiple | Long-term collection needs |
 
-### Purchase Options
+### Purchase
 
-**Option 1: Self-Service (Recommended)**
 - Link: https://mgnb.pro/product/xhs
-
-**Option 2: Self-Service**
-- Link: https://kjyjf.xetlk.com/s/1dk7Wy
-
-**Option 3: Manual Setup**
-- After payment, add WeChat (493882434) to connect
-<img width="2324" height="604" alt="image" src="https://github.com/user-attachments/assets/ff593976-e588-4126-8fd4-17d3154ccba1" />
 
 ---
 
