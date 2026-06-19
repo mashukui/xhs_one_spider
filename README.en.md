@@ -1,238 +1,232 @@
-# xhs_one_spider - Xiaohongshu Aggregator Spider
+# xhs_one_spider
 
-**Author:** [@马哥python说](https://github.com/mashukui)
+> 🔥 Xiaohongshu data collection tool / Xiaohongshu crawler GUI, supporting note collection, comment collection, creator profile note collection, image download, CSV export, and link conversion.
+>
+> 💡 Supports Windows/macOS with no Python environment required. This repository is used for software introduction, release distribution, usage documentation, and issue feedback. The complete source code is not publicly available.
+>
+> [⬇️Download Latest Release](https://github.com/mashukui/xhs_one_spider/releases/) | [🎬Video Demo](https://www.bilibili.com/video/BV1Z6rHBfExT/) | [💳Purchase Access](https://mgnb.pro/product/xhs)
 
----
 <p align="center">
-<a href="README.md">简体中文</a> | <a href="README.en.md">English</a>
+  <a href="README.md">简体中文 README</a> | <a href="README.en.md">English README</a>
 </p>
 
-## Overview
+## 👋 Overview
 
-Xiaohongshu (Little Red Book) is one of China's most influential community-driven product discovery platforms, with millions of users and extremely high daily active rates. The notes on this platform contain rich information value.
+`xhs_one_spider` is a desktop GUI tool designed for Xiaohongshu data collection scenarios. It combines search note collection, comment collection, creator profile note collection, and link conversion into one client. Users do not need to install or configure a Python environment. Download the client, log in, and start using it.
 
-To meet different data collection needs, I independently developed three separate tools in the past:
-- **Search Comment Spider**: For collecting comments based on search keywords
-- **Creator Spider**: For collecting content from specific creators
-- **Link Converter**: For converting links and user IDs
+It is suitable for the following scenarios:
 
-While these tools were stable and comprehensive, some users reported that having to switch between them when they wanted to collect both comments and creator notes was inconvenient. To solve this pain point, I integrated all three functions into one tool and launched the new **"Xiaohongshu Aggregator Spider v1.0"**. This software provides a one-stop solution for Xiaohongshu data collection, including comment collection, creator note collection, and link/ID conversion.
+| Scenario | Description |
+| --- | --- |
+| ✅ Lead generation | Collect potential leads from comments under industry, brand, or competitor-related notes |
+| ✅ Seeding analysis | Collect keyword-related notes, comments, and interaction data to analyze user interests |
+| ✅ Content research | Analyze high-quality creator notes, topic directions, and engagement performance |
+| ✅ Xiaohongshu operations | Convert profile links, Xiaohongshu IDs, uids, and note links between different formats |
 
----
+## ⚙️ Features
 
-## Usage Scenarios
+| Feature | Description | Output |
+| --- | --- | --- |
+| ✅ Search note collection | Search Xiaohongshu notes by keyword and collect basic note data | CSV, image files |
+| ✅ Comment collection | Collect comments from search results or specified note links | CSV |
+| ✅ Creator profile note collection | Collect note lists from creator profile links | CSV, image files |
+| ✅ Link and uid conversion | Convert between profile links, Xiaohongshu IDs, uids, and note links | CSV |
+| ✅ Incremental saving | Save data to CSV after each page to reduce data loss caused by interruptions | CSV |
+| ✅ Runtime logs | Record runtime logs for troubleshooting | logs files |
 
-- **Lead Generation**: Precisely collect target users from comment sections of popular posts in related industries or brands
-- **Data Analysis**: Collect Xiaohongshu platform data for social sentiment mining, online propagation research, etc.
-- **Content Creation**: Analyze content styles and trending topics from top creators to provide references for your own content
-- **Operation Management**: Convert home page links and user IDs, useful for professionals who need cross-tool collaboration
+## 🚀 Quick Start
 
----
+1. Open [Releases](https://github.com/mashukui/xhs_one_spider/releases/) and download the latest version.
+2. Extract the package and run the client for your operating system.
+3. Use the built-in cookie helper to configure your cookie.
+4. Log in to the software account.
+5. Select a collection module and enter a keyword, note link, or creator profile link.
+6. Click "Start" and wait for the collection task to finish.
+7. Check the CSV files, image files, and log files in the software directory.
 
-## Features
+## 💻 Supported Platforms
 
-### Feature 1: Search Notes and Comments Collection
+| Platform | Support |
+| --- | --- |
+| Windows | Supported. Download and run the Windows client |
+| macOS | Supported. Download and run the macOS client |
 
-**Collection Interface:**
-<img width="1440" height="1191" alt="image" src="https://github.com/user-attachments/assets/8c217c43-e3e3-4786-bb15-f2d148feb6b5" />
+## 🖼️ Screenshots
 
-**Collected Note Data** (19 fields):
-Keyword, Serial Number, Note ID, Note Link, Long Note Link, Cover Image Link, Note Type, User ID, User Profile Link, User Nickname, Like Count, Note Title, Note Content, Favorite Count, Comment Count, Share Count, Publish Time, Modify Time, IP Location
-<img width="1440" height="682" alt="image" src="https://github.com/user-attachments/assets/57924bc8-94f3-4407-b40d-9c08423da550" />
+### Search Note and Comment Collection
 
-**Collected Comment Data** (11 fields):
-Note Link, Long Note Link, Page Number, Commenter Nickname, Commenter ID, Commenter Profile Link, Comment Time, Comment IP Location, Comment Like Count, Comment Level, Comment Content
-<img width="2776" height="1310" alt="image" src="https://github.com/user-attachments/assets/d2fa2084-8821-4ba5-97ec-d69f7254ca71" />
+Comment collection interface:
 
-**Automatic Download of Search Result Images:**
-<img width="1440" height="946" alt="image" src="https://github.com/user-attachments/assets/9ad1a902-0d43-4a63-86b1-c0976c9de22b" />
+![Comment collection interface](https://files.mdnice.com/user/32110/ee04956a-fc9f-43f5-b115-19c8cd0a0e86.jpg)
 
----
+Search note result:
 
-### Feature 2: Collect Notes by Creator Profile Link
+![Search notes CSV](https://files.mdnice.com/user/32110/5a5e5f6c-786f-4549-94a4-70964b49be79.png)
 
-**Collection Interface:**
-<img width="1440" height="1191" alt="image" src="https://github.com/user-attachments/assets/27d4da31-bd89-418c-90e0-adc05602be93" />
+Comment collection result:
 
-**Collected Creator Notes** (18 fields):
-- Author Nickname, Author ID, Author Link, Page Number, Note Title, Note ID, Note Link, Long Note Link, Cover Image Link, Note Type, Like Count, Favorite Count, Comment Count, Share Count, Note Content, Publish Time, Modify Time, IP Location
-<img width="1440" height="689" alt="image" src="https://github.com/user-attachments/assets/e0c800f1-9ae2-4644-8827-31ec1e50a57a" />
+![Comments CSV](https://files.mdnice.com/user/32110/5ce3064c-832a-4ee0-ac85-0ce7abba145f.png)
 
-**Collected Creator Note Images:**
-<img width="1440" height="969" alt="image" src="https://github.com/user-attachments/assets/4bdc68e4-67be-4fa8-a8be-f128ec30fd7f" />
+Automatically downloaded search note images:
 
----
+![Search note images](https://files.mdnice.com/user/32110/f8a10524-685b-460f-8c74-5f1431bfe4d8.png)
 
-### Feature 3: Link and ID Conversion
+### Creator Profile Note Collection
 
-**Conversion 1: Home Page Link → Xiaohongshu ID**
-<img width="1440" height="1191" alt="image" src="https://github.com/user-attachments/assets/9c0f6c2b-05ce-440c-a69d-cba52db7f4a0" />
+Creator profile note collection interface:
 
-**Conversion 2: Xiaohongshu ID → Home Page Link (with UID)**
-<img width="1440" height="1191" alt="image" src="https://github.com/user-attachments/assets/7b44e382-8f42-4432-b927-ed4451a2d239" />
+![Creator profile note collection interface](https://files.mdnice.com/user/32110/0b970c66-ae38-4185-821e-f1640e9ff6a2.jpg)
 
-**Conversion 3: App Link → PC Link**
-<img width="1440" height="1191" alt="image" src="https://github.com/user-attachments/assets/2dbc4738-bf97-4deb-b0e0-effdb1d64679" />
+Creator profile note result:
 
----
+![Creator profile notes CSV](https://files.mdnice.com/user/32110/4fea9e53-79e9-4490-9496-32c7f408afa5.png)
 
-## Important Notes
+Automatically downloaded creator profile note images:
 
-- Works on both Windows and Mac systems without requiring any programming environment setup
-- Contains three core functions:
-  1. Collect comments by keyword/note link
-  2. Collect notes by creator profile link
-  3. UID conversion
-- Uses API protocols for data collection (not RPA simulation), ensuring high stability
-- After the software completes, CSV result files are generated in the current folder (the folder where the software is located)
-- Data is saved after each page is collected, not all at once at the end. This prevents data loss from unexpected interruptions (1-2 second request interval between pages, customizable)
-- Detailed log files are recorded during collection for easy troubleshooting
+![Creator profile note images](https://files.mdnice.com/user/32110/4dcf4e6a-f770-4a33-95ee-db170078aa57.png)
 
----
+### Link and uid Conversion
 
-## Technology Stack
+Convert a profile link to a Xiaohongshu ID:
 
-All modules are developed in Python:
+![Convert profile link to Xiaohongshu ID](https://files.mdnice.com/user/32110/868991d4-9b63-4479-a9e1-dffc562f87ac.jpg)
 
-- **tkinter**: GUI interface
-- **requests**: HTTP requests
-- **json**: Response data parsing
-- **pandas**: CSV data output
-- **logging**: Runtime log recording
+Convert a Xiaohongshu ID to a profile link:
 
-**Note:** Due to copyright concerns, source code is not publicly available. Only the software itself is provided to users.
+![Convert Xiaohongshu ID to profile link](https://files.mdnice.com/user/32110/aed92d65-f305-4ac2-9a20-ccd06e5e49d6.jpg)
 
----
+Convert a mobile app note link to a PC note link:
 
-## Code Examples
+![Convert app note link to PC note link](https://files.mdnice.com/user/32110/7faa66a9-5c2e-420b-85b4-f7a92796dd6d.jpg)
 
-### Sending Requests and Parsing Data
+## 📊 Output Fields
 
-```python
-# Send request
-r = requests.get(url, headers=h1, params=params)
-# Parse data
-json_data = r.json()
-```
-
-### Parsing Response Data (Example: Comment Content)
-
-```python
-for c in json_data['data']['comments']:
-    # Comment content
-    content = c['content']
-    self.tk_show('Comment Content: ' + str(content))
-    content_list.append(content)
-```
-
-### Saving Data to CSV File
-
-```python
-# Save data to DataFrame
-df = pd.DataFrame({
-    'Note Link': 'https://www.xiaohongshu.com/explore/' + note_id,
-    'Long Note Link': note_url2,
-    'Page Number': page,
-    'Commenter Nickname': nickname_list,
-    'Commenter ID': user_id_list,
-    'Commenter Profile Link': user_link_list,
-    'Comment Time': create_time_list,
-    'Comment IP Location': ip_list,
-    'Comment Like Count': like_count_list,
-    'Comment Level': comment_level_list,
-    'Comment Content': content_list,
-})
-
-# Set CSV headers
-if os.path.exists(self.result_file3):
-    header = False
-else:
-    header = True
-
-# Save to CSV
-df.to_csv(self.result_file3, mode='a+', header=header, index=False, encoding='utf_8_sig')
-self.tk_show('File saved successfully: ' + self.result_file3)
-```
-
-### Copyright Footer
-
-```python
-# Copyright information
-copyright = tk.Label(root, text='@马哥python说 All rights reserved.', font=('SimSun', 10), fg='grey')
-copyright.place(x=290, y=625)
-```
-
-### Logging Module
-
-```python
-def get_logger(self):
-    self.logger = logging.getLogger(__name__)
-    # Log format
-    formatter = '[%(asctime)s-%(filename)s][%(funcName)s-%(lineno)d]--%(message)s'
-    # Log level
-    self.logger.setLevel(logging.DEBUG)
-    # Console log
-    sh = logging.StreamHandler()
-    log_formatter = logging.Formatter(formatter, datefmt='%Y-%m-%d %H:%M:%S')
-    # Info log filename
-    info_file_name = time.strftime("%Y-%m-%d") + '.log'
-    # Save to specific directory
-    case_dir = r'./logs/'
-    info_handler = TimedRotatingFileHandler(
-        filename=case_dir + info_file_name,
-        when='MIDNIGHT',
-        interval=1,
-        backupCount=7,
-        encoding='utf-8'
-    )
-```
-
----
-
-## Setup Instructions
-
-1. Before starting, use the built-in **"Cookie Tool"** to automatically configure your cookie
-2. After login, select the function module you need (Search Notes / Creator Notes / Comments)
-3. Set relevant parameters (keywords, time range, creator link, etc.)
-4. Click **"Start Execution"** and wait for collection to complete (you can view progress in real-time)
-5. After completion, check the CSV data files or downloaded images in the default current folder
-
-**Demo Video:** [Tool Demo] Xiaohongshu Aggregator Spider Collection Tool
-
----
-
-## Pricing
-
-| Plan | Duration | Price | Purchase Limit | Suitable For |
-|------|----------|-------|----------------|--------------|
-| Daily Pass | 1 day | ¥39 | One-time | Trial or temporary needs |
-| Monthly Pass | 1 month | ¥149 | Multiple | Short-term collection needs |
-| Quarterly Pass | 3 months | ¥399 | Multiple | Medium-term collection needs |
-| Annual Pass | 1 year | ¥799 | Multiple | Long-term collection needs |
-
-### Purchase
-
-- Link: https://mgnb.pro/product/xhs
-
----
-
-## Security & Usage Limits
-
-- To prevent software resale, a **one-device-one-code** mechanism is used. Each code can only run on one computer
-- Only one software instance is allowed per computer (multi-instance is not supported)
-
----
-
-## Author Info
-
-This software is independently developed and maintained by me, with long-term updates and stable operation guaranteed.
-
-**Official Account:** "老男孩的平凡之路"
-**Reply "爬小红书聚合软件" (Xiaohongshu Aggregator Spider) in the account's backend to get the latest installation package.**
-<img width="1938" height="364" alt="image" src="https://github.com/user-attachments/assets/af125187-8217-42a3-bc86-d32df25f3e88" />
-
----
-
-## Disclaimer
-
-This tool is for **academic exchange purposes only**. Please strictly comply with relevant laws and regulations, ensure the legality and compliance of platform content, and **prohibit any commercial use**!
+The software generates different CSV files based on the selected collection module. Since there are many fields, the main field groups are shown first. You can expand the sections below to view the full field lists.
+
+### Search Note Data
+
+- Collection info: keyword, index
+- Note info: note id, note link, long note link, cover image link, note type, note title, note content
+- Author info: user id, user profile link, user nickname
+- Interaction data: likes, favorites, comments, shares
+- Time and location: published time, modified time, IP location
+
+<details>
+<summary>View full search note fields</summary>
+
+Keyword, index, note id, note link, long note link, cover image link, note type, user id, user profile link, user nickname, likes, note title, note content, favorites, comments, shares, published time, modified time, IP location
+
+</details>
+
+### Comment Data
+
+- Collection info: note link, long note link, page
+- Commenter info: commenter nickname, commenter id, commenter profile link
+- Comment info: comment time, comment IP location, comment likes, comment level, comment content
+
+<details>
+<summary>View full comment fields</summary>
+
+Note link, long note link, page, commenter nickname, commenter id, commenter profile link, comment time, comment IP location, comment likes, comment level, comment content
+
+</details>
+
+### Creator Profile Note Data
+
+- Collection info: page
+- Author info: author nickname, author id, author profile link
+- Note info: note title, note id, note link, long note link, cover image link, note type, note content
+- Interaction data: likes, favorites, comments, shares
+- Time and location: published time, modified time, IP location
+
+<details>
+<summary>View full creator profile note fields</summary>
+
+Author nickname, author id, author link, page, note title, note id, note link, long note link, cover image link, note type, likes, favorites, comments, shares, note content, published time, modified time, IP location
+
+</details>
+
+## 🛠️ Technical Notes
+
+The software is developed in Python. Core modules include:
+
+| Module | Purpose |
+| --- | --- |
+| tkinter | GUI interface |
+| requests | API requests |
+| json | Response parsing |
+| pandas | CSV export |
+| logging | Runtime logging |
+
+The software collects data through interface requests and does not rely on browser automation or RPA-style operations. During collection, results are saved by page by default. The request interval is usually about 1-2 seconds, which helps control the collection pace and reduce data loss caused by unexpected interruptions.
+
+## 💰 Pricing
+
+| Plan | Duration | Price | Recommended Usage |
+| --- | --- | --- | --- |
+| Day pass | 1 day | 39 CNY | Trial use or small one-time tasks |
+| Monthly pass | 1 month | 149 CNY | Short-term collection needs |
+| Quarterly pass | 3 months | 399 CNY | Medium-term collection needs |
+| Yearly pass | 1 year | 799 CNY | Long-term stable use |
+
+Purchase page: [https://mgnb.pro/product/xhs](https://mgnb.pro/product/xhs)
+
+## 🔐 License and Activation Rules
+
+- The software uses a one-device-one-license mechanism. One license key can only be used on one computer.
+- Only one software instance is allowed on a single computer. Multiple concurrent instances are not supported.
+- The software is maintained by the author, and future versions will be published through GitHub Releases.
+
+## ❓ FAQ
+
+### Do I need to install Python?
+
+No. The software is packaged as a desktop client. Download the version for your operating system and run it directly.
+
+### What is the cookie used for?
+
+The cookie allows the software to access platform data under your current account session. Please use your own account cookie and keep related files secure.
+
+### Will collected data be lost if the task is interrupted?
+
+The software saves CSV files by page instead of waiting until the whole task is complete. If the task is interrupted, data from completed pages is usually still preserved in the result files.
+
+### Where are result files saved?
+
+By default, result files are saved in the software directory. CSV files, image files, and log files are generated by feature module.
+
+### How much data can it collect?
+
+The actual amount of data depends on the keyword, account status, platform API response, network environment, and collection frequency. It is recommended to set a reasonable collection range and request interval.
+
+### What should I do if an error occurs?
+
+Check the log files under the `logs` directory first. When reporting an issue, please provide:
+
+- Software version
+- Operating system
+- Feature module used
+- Keyword, creator profile link, or note link entered
+- Error screenshot
+- Log content around the time when the error occurred
+
+## ⚠️ Compliance Statement
+
+This software is intended only for lawful data analysis, learning, research, and authorized business scenarios. Users are responsible for complying with the target platform's terms of service, privacy policy, and applicable laws and regulations.
+
+Do not use this software for:
+
+- High-frequency, malicious, or destructive requests
+- Unauthorized collection, distribution, or sale of sensitive personal information
+- Activities that infringe the lawful rights of platforms, creators, or users
+- Any other behavior that violates laws, regulations, or platform rules
+
+Users are solely responsible for risks and liabilities caused by improper use.
+
+## 📦 Get the Software
+
+- GitHub Releases: [https://github.com/mashukui/xhs_one_spider/releases/](https://github.com/mashukui/xhs_one_spider/releases/)
+- WeChat official account: `老男孩的平凡之路`
+- Reply in the WeChat official account: `爬小红书聚合软件`
+
+<img alt="WeChat official account QR code" src="https://github.com/user-attachments/assets/c5d7b4b4-b507-4734-b004-63b99abe370a" />
