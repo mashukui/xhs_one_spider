@@ -1,204 +1,232 @@
 # xhs_one_spider
-> 🔥小红书采集器 - GUI界面开箱即用，提供日卡试用
+
+> 🔥 小红书数据采集工具 / Xiaohongshu crawler GUI，支持小红书笔记采集、评论采集、博主主页采集、图片下载、CSV 导出和链接转换。
 >
-> 🔧支持功能：✅搜索笔记采集 ✅搜索评论采集 ✅博主笔记采集 ✅链接转换
+> 💡 支持 Windows/macOS，无需配置 Python 环境；仓库用于软件介绍、版本发布、使用说明和问题反馈，完整源码暂不公开。
 >
-> [⬇️点这里下载最新版](https://github.com/mashukui/xhs_one_spider/releases/)
+> [⬇️下载最新版](https://github.com/mashukui/xhs_one_spider/releases/) | [🎬使用演示](https://mp.weixin.qq.com/s/t9cKGsgJoI9rca3I1w5RdA) | [💳开通使用](https://mgnb.pro/product/xhs)
 
 <p align="center">
-<a href="README.md">简体中文 README</a> | <a href="README.en.md">English README</a>
+  <a href="README.md">简体中文 README</a> | <a href="README.en.md">English README</a>
 </p>
 
-# 一、背景分析与结果展示
-## 1.1 开发背景
+## 👋 软件简介
 
-我是[@马哥python说](https://github.com/mashukui)，一枚10年+程序猿，现全职独立开发。
-<img width="2046" height="328" alt="xhs_slogon" src="https://github.com/user-attachments/assets/1396379d-fc59-4848-a831-60eb2bd24ebc" />
-小红书作为国内极具影响力的社区种草平台，汇聚了大量用户且拥有极高的日活跃度，其笔记数据蕴含丰富的信息价值。之前，为了满足大家不同的数据采集需求，我分别独立开发了三款软件：针对评论采集的“[爬小红书搜索评论软件](https://github.com/mashukui/xhs_search_comment_tool)”、专门采集特定博主内容的“[爬小红书博主软件](https://github.com/mashukui/xhs_user_post_tool)”，还有专门转换链接uid的“[小红书转换工具](https://github.com/mashukui/xhs_trans_tool)”。
+`xhs_one_spider` 是一款面向小红书数据采集场景的桌面 GUI 工具，整合了搜索笔记采集、评论采集、博主笔记采集、链接转换等常用能力。用户无需配置 Python 环境，下载客户端后登录即可使用。
 
-这三款软件采集起来挺稳定、数据也全，但部分用户反馈，要是又想采评论又想采主页笔记，来回切换软件，用着有点麻烦。为了解决这个痛点，我把这三款软件整合到一起了，推出了全新的“**爬小红书聚合软件v1.0**”。这款软件把评论采集、达人笔记采集、uid转换这三个核心功能都包含了，提供一站式搞定的小红书数据采集方案。
+它适合以下场景：
 
-## 1.2 适用人群与场景
-软件适用于：
-- **获客截流**：从相关行业、品牌热门作品下的评论区精准采集目标用户；
-- **数据分析**：采集小红书平台数据，用于社会舆情挖掘、网络传播研究等；
-- **内容创作**：分析优质博主的内容风格、热门话题，为自身创作提供参考；
-- **红薯运营**：主页链接uid与小红书号的转换，需要跨工具协作的从业者。
+| 场景 | 说明 |
+| --- | --- |
+| ✅ 获客截流 | 从行业、品牌、竞品相关笔记评论区采集潜在用户线索 |
+| ✅ 种草分析 | 采集关键词相关笔记、评论和互动数据，分析用户关注点 |
+| ✅ 内容创作 | 分析优质博主笔记结构、选题方向和互动表现 |
+| ✅ 小红书运营 | 进行主页链接、小红书号、uid、笔记链接等格式转换 |
 
-## 1.3 结果展示
-**【功能1】采集搜索笔记和评论**
+## ⚙️ 功能概览
+
+| 功能 | 说明 | 输出 |
+| --- | --- | --- |
+| ✅ 搜索笔记采集 | 按关键词搜索小红书笔记，采集笔记基础数据 | CSV、图片文件 |
+| ✅ 评论采集 | 根据搜索结果或指定笔记链接采集评论 | CSV |
+| ✅ 博主笔记采集 | 根据博主主页链接采集主页笔记列表 | CSV、图片文件 |
+| ✅ 链接与 uid 转换 | 支持主页链接、小红书号、uid、笔记链接之间的转换 | CSV |
+| ✅ 自动保存 | 每采集一页立即写入 CSV，降低中断丢数风险 | CSV |
+| ✅ 运行日志 | 自动记录运行过程，便于排查问题 | logs 日志文件 |
+
+## 🚀 快速开始
+
+1. 打开 [Releases](https://github.com/mashukui/xhs_one_spider/releases/) 下载最新版软件。
+2. 解压后运行对应系统的客户端。
+3. 使用软件内置的 cookie 小工具完成 cookie 配置。
+4. 登录软件账号。
+5. 选择采集模块，填写关键词、笔记链接或博主主页链接。
+6. 点击「开始执行」，等待采集完成。
+7. 在软件所在目录查看 CSV、图片文件和日志文件。
+
+## 💻 支持系统
+
+| 系统 | 支持情况 |
+| --- | --- |
+| Windows | 支持，下载 Windows 客户端即可运行 |
+| macOS | 支持，下载 macOS 客户端即可运行 |
+
+## 🖼️ 功能展示
+
+### 搜索笔记与评论采集
 
 采集评论界面：
+
 ![采集评论界面](https://files.mdnice.com/user/32110/ee04956a-fc9f-43f5-b115-19c8cd0a0e86.jpg)
 
-采集到的笔记数据：（共19个字段，含：关键词,序号,笔记id,笔记链接,笔记链接_长,头图链接,笔记类型,用户id,用户主页链接,用户昵称,点赞数,笔记标题,笔记正文,收藏数,评论数,转发数,发布时间,修改时间,IP属地）
+搜索笔记结果：
+
 ![搜索笔记.csv](https://files.mdnice.com/user/32110/5a5e5f6c-786f-4549-94a4-70964b49be79.png)
 
-采集到的评论数据：（共11个字段，含： 笔记链接,笔记链接_长,页码,评论者昵称,评论者id,评论者主页链接,评论时间,评论IP属地,评论点赞数,评论级别,评论内容）
+评论采集结果：
+
 ![评论.csv](https://files.mdnice.com/user/32110/5ce3064c-832a-4ee0-ac85-0ce7abba145f.png)
 
+自动下载的搜索笔记图片：
 
-自动下载搜索到的笔记图片：
 ![搜索笔记图片](https://files.mdnice.com/user/32110/f8a10524-685b-460f-8c74-5f1431bfe4d8.png)
 
-**【功能2】根据主页链接采集笔记**
+### 博主笔记采集
 
-采集主页笔记界面：
+博主笔记采集界面：
+
 ![采集主页笔记页面](https://files.mdnice.com/user/32110/0b970c66-ae38-4185-821e-f1640e9ff6a2.jpg)
 
-采集主页笔记结果：（含18个字段，含： 作者昵称,作者id,作者链接,页码,笔记标题,笔记id,笔记链接,笔记链接_长,头图链接,笔记类型,点赞数,收藏数,评论数,转发数,笔记正文,发布时间,修改时间,IP属地）
+博主笔记结果：
+
 ![主页笔记.csv](https://files.mdnice.com/user/32110/4fea9e53-79e9-4490-9496-32c7f408afa5.png)
 
-采集到的主页笔记图片文件：
+自动下载的博主笔记图片：
+
 ![主页笔记图片](https://files.mdnice.com/user/32110/4dcf4e6a-f770-4a33-95ee-db170078aa57.png)
 
-**【功能3】链接与uid转换**
+### 链接与 uid 转换
 
-转换功能1：主页链接转xhs号
+主页链接转小红书号：
+
 ![转换功能1：主页链接转xhs号](https://files.mdnice.com/user/32110/868991d4-9b63-4479-a9e1-dffc562f87ac.jpg)
 
-转换功能2：xhs号转主页链接（含uid）
+小红书号转主页链接：
+
 ![转换功能2：xhs号转主页链接（含uid）](https://files.mdnice.com/user/32110/aed92d65-f305-4ac2-9a20-ccd06e5e49d6.jpg)
 
-转换功能3：app端作品链接转pc端作品链接
+App 端笔记链接转 PC 端笔记链接：
+
 ![转换功能3：app端作品链接转pc端作品链接](https://files.mdnice.com/user/32110/7faa66a9-5c2e-420b-85b4-f7a92796dd6d.jpg)
 
-## 1.4 软件说明
-几点说明，请详读：
-1. Windows系统、Mac系统均可直接运行，无需配置编程环境
-2. 软件含三个核心功能：①根据关键词/笔记链接采集评论；②根据主页链接采集笔记；③uid转换
-3. 软件通过接口协议采集，并非通过模拟浏览器等RPA类，稳定性较高
-4. 软件运行完成后，会在当前文件夹（即，软件所在文件夹）生成csv结果文件
-5. 采集过程中，每采集一页，存一次csv。并非采完最后一次性保存！防止因异常中断导致丢失前面的数据（每页请求间隔1~2s，可自定义设置）
-6. 采集过程中，有log文件详细记录运行过程，方便回溯
+## 📊 输出字段
 
-# 二、主要技术
-## 2.1 模块分工
-软件全部模块采用python语言开发，主要分工如下：
-```python
-tkinter：GUI软件界面
-requests：发送请求
-json：解析返回的响应数据
-pandas：保存csv数据结果
-logging：运行过程中日志记录
-```
-出于版权考虑，暂不公开源码，仅向用户提供软件使用。 
+软件会根据不同采集模块生成对应的 CSV 文件。字段较多，下面先按数据类型展示主要字段范围；需要完整字段时，可展开查看。
 
-## 2.2 部分代码
+### 搜索笔记数据
 
-部分代码实现： 
+- 采集信息：关键词、序号
+- 笔记信息：笔记 id、笔记链接、笔记长链接、头图链接、笔记类型、笔记标题、笔记正文
+- 作者信息：用户 id、用户主页链接、用户昵称
+- 互动数据：点赞数、收藏数、评论数、转发数
+- 时间与属地：发布时间、修改时间、IP 属地
 
-发送请求并解析数据：
-```python
-# 发送请求
-r = requests.get(url, headers=h1, params=params)
-# 解析数据
-json_data = r.json()
-```
-解析响应数据，以“评论内容”字段为例：
-```python
-for c in json_data['data']['comments']:
-	# 评论内容
-	content = c['content']
-	self.tk_show('评论内容:' + str(content))
-	content_list.append(content)
-```
-保存结果数据到csv文件：
-```python
-# 保存数据到DF
-df = pd.DataFrame(
-	{
-		'笔记链接': 'https://www.xiaohongshu.com/explore/' + note_id,
-		'笔记链接_长': note_url2,
-		'页码': page,
-		'评论者昵称': nickname_list,
-		'评论者id': user_id_list,
-		'评论者主页链接': user_link_list,
-		'评论时间': create_time_list,
-		'评论IP属地': ip_list,
-		'评论点赞数': like_count_list,
-		'评论级别': comment_level_list,
-		'评论内容': content_list,
-	}
-)
-# 设置csv文件表头
-if os.path.exists(self.result_file3):
-	header = False
-else:
-	header = True
-# 保存到csv
-df.to_csv(self.result_file3, mode='a+', header=header, index=False, encoding='utf_8_sig')
-self.tk_show('文件保存成功：' + self.result_file3)
-```
-底部版权声明：
-```python
-# 版权信息
-copyright = tk.Label(root, text='@马哥python说 All rights reserved.', font=('仿宋', 10), fg='grey')
-copyright.place(x=290, y=625)
-```
-日志记录模块：
-```python
-def get_logger(self):
-    self.logger = logging.getLogger(__name__)
-    # 日志格式
-    formatter = '[%(asctime)s-%(filename)s][%(funcName)s-%(lineno)d]--%(message)s'
-    # 日志级别
-    self.logger.setLevel(logging.DEBUG)
-    # 控制台日志
-    sh = logging.StreamHandler()
-    log_formatter = logging.Formatter(formatter, datefmt='%Y-%m-%d %H:%M:%S')
-    # info日志文件名
-    info_file_name = time.strftime("%Y-%m-%d") + '.log'
-    # 保存到特定目录下
-    case_dir = r'./logs/'
-    info_handler = TimedRotatingFileHandler(filename=case_dir + info_file_name,
-                                        when='MIDNIGHT',
-                                        interval=1,
-                                        backupCount=7,
-                                        encoding='utf-8')
-```
+<details>
+<summary>查看搜索笔记完整字段</summary>
 
-# 三、功能与使用
-## 3.1 一键配置cookie
-开始采集前，先用内置的《cookie小工具》自动配置好cookie。
-![7c14954d150d91af132bc7d82bb64cc3](https://github.com/user-attachments/assets/d7ade547-18d9-4d49-9a46-c7103e2b8ed3)
+关键词、序号、笔记 id、笔记链接、笔记链接_长、头图链接、笔记类型、用户 id、用户主页链接、用户昵称、点赞数、笔记标题、笔记正文、收藏数、评论数、转发数、发布时间、修改时间、IP 属地
 
-这样，获取到的cookie值就自动写入cookie.txt文件中了，告别繁琐的手动获取。
-## 3.2 软件登录
-用户登录界面：需要登录。
-## 3.3 启动采集
-1）登录成功之后，选择需要的功能模块（搜索笔记/博主笔记/评论）；
+</details>
 
-2）设置相关参数（如关键词、时间范围、博主链接等）；
+### 评论数据
 
-3）点击「开始执行」，等待采集完成（可实时查看采集进度）；
+- 采集信息：笔记链接、笔记长链接、页码
+- 评论者信息：评论者昵称、评论者 id、评论者主页链接
+- 评论信息：评论时间、评论 IP 属地、评论点赞数、评论级别、评论内容
 
-4）采集完成后，在默认的当前文件夹中查看csv数据文件或图片下载等。
+<details>
+<summary>查看评论完整字段</summary>
 
-## 3.4 演示视频
-软件使用的完整过程演示视频：[【工具演示】小红书聚合采集软件](https://mp.weixin.qq.com/s/t9cKGsgJoI9rca3I1w5RdA)
+笔记链接、笔记链接_长、页码、评论者昵称、评论者 id、评论者主页链接、评论时间、评论 IP 属地、评论点赞数、评论级别、评论内容
 
-# 四、付费说明
-## 4.1 卡密说明
-费用如下：
-```python
-日卡：使用期限1天，39元。适合试用等临时需求
-月卡：使用期限1个月，149元。适合短期采集需求
-季卡：使用期限3个月，399元。适合中期采集需求
-年卡：使用期限1年，799元。适合长期采集需求
-```
+</details>
 
-开通入口：https://mgnb.pro/product/xhs
+### 博主笔记数据
 
-## 4.2 一机一码
-为防止软件被恶意转卖，采用一机一码机制，一个卡密只能在一台电脑运行、不可多电脑运行。
+- 采集信息：页码
+- 作者信息：作者昵称、作者 id、作者主页链接
+- 笔记信息：笔记标题、笔记 id、笔记链接、笔记长链接、头图链接、笔记类型、笔记正文
+- 互动数据：点赞数、收藏数、评论数、转发数
+- 时间与属地：发布时间、修改时间、IP 属地
 
-## 4.3 软件多开
-一台电脑仅允许运行一个软件，不支持软件多开。
+<details>
+<summary>查看博主笔记完整字段</summary>
 
-## 4.4 软件维护
-软件由本人独立原创开发，长期维护更新，提供稳定运行。
+作者昵称、作者 id、作者链接、页码、笔记标题、笔记 id、笔记链接、笔记链接_长、头图链接、笔记类型、点赞数、收藏数、评论数、转发数、笔记正文、发布时间、修改时间、IP 属地
 
-# 五、软件获取
-公众号"**老男孩的平凡之路**"，后台回复"**爬小红书聚合软件**"获取最新版软件安装包。[或点这里直接下载](https://github.com/mashukui/xhs_one_spider/releases/)
-<img width="1938" height="364" alt="二维码-公众号放底部v2" src="https://github.com/user-attachments/assets/c5d7b4b4-b507-4734-b004-63b99abe370a" />
+</details>
+
+## 🛠️ 技术说明
+
+软件采用 Python 开发，核心模块包括：
+
+| 模块 | 用途 |
+| --- | --- |
+| tkinter | GUI 软件界面 |
+| requests | 接口请求 |
+| json | 响应数据解析 |
+| pandas | CSV 数据保存 |
+| logging | 运行日志记录 |
+
+软件通过接口协议采集数据，不依赖模拟浏览器等 RPA 操作。采集过程中默认按页保存结果，每页请求间隔约 1-2 秒，便于控制采集节奏并降低异常中断造成的数据损失。
+
+## 💰 价格说明
+
+| 类型 | 使用期限 | 价格 | 适用场景 |
+| --- | --- | --- | --- |
+| 日卡 | 1 天 | 39 元 | 临时试用、小批量任务 |
+| 月卡 | 1 个月 | 149 元 | 短期采集需求 |
+| 季卡 | 3 个月 | 399 元 | 中期采集需求 |
+| 年卡 | 1 年 | 799 元 | 长期稳定使用 |
+
+开通入口：[https://mgnb.pro/product/xhs](https://mgnb.pro/product/xhs)
+
+## 🔐 授权规则
+
+- 软件采用一机一码机制，一个卡密仅支持一台电脑使用。
+- 一台电脑仅允许运行一个软件实例，不支持多开。
+- 软件由作者长期维护，后续版本通过 GitHub Releases 发布。
+
+## ❓ 常见问题
+
+### 是否需要安装 Python？
+
+不需要。软件已打包为桌面客户端，下载对应系统版本后即可运行。
+
+### cookie 是做什么用的？
+
+cookie 用于让软件以当前账号状态访问平台数据。请使用自己的账号 cookie，并妥善保管相关文件。
+
+### 采集中断后数据会丢失吗？
+
+软件按页保存 CSV，不是等全部采集结束后才保存。即使中途中断，已完成页的数据通常仍会保留在结果文件中。
+
+### 结果文件保存在哪里？
+
+默认保存在软件所在文件夹。CSV、图片文件和日志文件会根据功能模块分别生成。
+
+### 支持采集多少数据？
+
+实际可采集数量会受到关键词、账号状态、平台接口返回、网络环境和采集频率等因素影响。建议合理设置采集范围和请求间隔。
+
+### 软件报错怎么办？
+
+请优先查看 `logs` 目录下的日志文件，并在反馈时提供以下信息：
+
+- 软件版本
+- 操作系统
+- 使用的功能模块
+- 输入的关键词、博主主页链接或笔记链接
+- 报错截图
+- 对应时间段的日志内容
+
+## ⚠️ 合规声明
+
+本软件仅供合法合规的数据分析、学习研究和自有业务场景使用。使用者应自行遵守目标平台服务协议、隐私政策以及所在地法律法规。
+
+请勿将本软件用于以下用途：
+
+- 高频、恶意或破坏性请求
+- 未经授权采集、传播或售卖个人敏感信息
+- 侵犯平台、作者或用户合法权益的行为
+- 违反法律法规或平台规则的其他行为
+
+因使用者不当使用造成的风险和责任，由使用者自行承担。
+
+## 📦 获取软件
+
+- GitHub Releases：[https://github.com/mashukui/xhs_one_spider/releases/](https://github.com/mashukui/xhs_one_spider/releases/)
+- 公众号：`老男孩的平凡之路`
+- 公众号后台回复：`爬小红书聚合软件`
+
+<img alt="二维码-公众号放底部v2" src="https://github.com/user-attachments/assets/c5d7b4b4-b507-4734-b004-63b99abe370a" />
