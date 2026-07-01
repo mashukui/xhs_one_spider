@@ -229,4 +229,4 @@ Users are solely responsible for risks and liabilities caused by improper use.
 - WeChat official account: `老男孩的平凡之路`
 - Reply in the WeChat official account: `爬小红书聚合软件`
 
-<img alt="WeChat official account QR code" src="https://github.com/user-attachments/assets/c5d7b4b4-b507-4734-b004-63b99abe370a" />
+<img width="573" height="196" alt="二维码-公众号放底部v4" src="https://github.com/user-attachments/assets/9ad83e33-0029-433c-b2b2-6ca47e2f61eb" />
