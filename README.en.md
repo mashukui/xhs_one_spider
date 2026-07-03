@@ -227,6 +227,6 @@ Users are solely responsible for risks and liabilities caused by improper use.
 
 - GitHub Releases: [https://github.com/mashukui/xhs_one_spider/releases/](https://github.com/mashukui/xhs_one_spider/releases/)
 - WeChat official account: `老男孩的平凡之路`
-- Reply in the WeChat official account: `爬小红书聚合软件`
+- Reply in the WeChat official account: `小红书`
 
 <img width="573" height="196" alt="二维码-公众号放底部v4" src="https://github.com/user-attachments/assets/9ad83e33-0029-433c-b2b2-6ca47e2f61eb" />
