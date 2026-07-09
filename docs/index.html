@@ -1,0 +1,842 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>小红书聚合采集 - Xiaohongshu Crawler</title>
+    <style>
+        :root {
+            --red: #ff2442;
+            --dark: #1a1a2e;
+            --bg: #f8f9fa;
+            --card: #ffffff;
+            --text: #333333;
+            --muted: #666666;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.7;
+        }
+
+        /* ── Language Switcher ── */
+        .lang-switcher {
+            position: fixed;
+            top: 1rem;
+            right: 1rem;
+            z-index: 1000;
+            display: flex;
+            gap: 4px;
+            background: rgba(255,255,255,.85);
+            backdrop-filter: blur(8px);
+            border-radius: 20px;
+            padding: 4px;
+            box-shadow: 0 2px 8px rgba(0,0,0,.12);
+        }
+        .lang-btn {
+            border: none;
+            padding: 6px 14px;
+            border-radius: 16px;
+            font-size: .85rem;
+            font-weight: 600;
+            cursor: pointer;
+            background: transparent;
+            color: var(--muted);
+            transition: all .2s;
+            font-family: inherit;
+        }
+        .lang-btn.active {
+            background: var(--red);
+            color: #fff;
+        }
+        .lang-btn:hover:not(.active) {
+            background: #fee;
+            color: var(--red);
+        }
+
+        /* ── Language visibility ── */
+        html[lang="zh-CN"] .lang-en { display: none !important; }
+        html[lang="en"] .lang-zh { display: none !important; }
+
+        /* ── Hero ── */
+        .hero {
+            background: linear-gradient(135deg, #cc1a35 0%, #ff2442 50%, #ff5570 100%);
+            color: #fff;
+            padding: 4rem 2rem 3rem;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        .hero::before {
+            content: "";
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 60%);
+            animation: pulse 4s ease-in-out infinite;
+        }
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); opacity: 0.5; }
+            50% { transform: scale(1.1); opacity: 0.2; }
+        }
+        .hero h1 {
+            font-size: 2.5rem;
+            margin-bottom: 0.8rem;
+            position: relative;
+            z-index: 1;
+        }
+        .hero p {
+            font-size: 1.15rem;
+            opacity: .92;
+            max-width: 700px;
+            margin: 0 auto 1.5rem;
+            position: relative;
+            z-index: 1;
+        }
+        .hero .badges {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+            position: relative;
+            z-index: 1;
+        }
+        .hero .badge {
+            background: rgba(255,255,255,.2);
+            backdrop-filter: blur(6px);
+            padding: 6px 16px;
+            border-radius: 20px;
+            font-size: .9rem;
+        }
+        .hero .cta-btn {
+            display: inline-block;
+            margin-top: 1.8rem;
+            background: #fff;
+            color: var(--red);
+            padding: 14px 48px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 1.1rem;
+            position: relative;
+            z-index: 1;
+            transition: transform .15s, box-shadow .15s;
+        }
+        .hero .cta-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(0,0,0,.2);
+        }
+        .hero .cta-sub {
+            display: block;
+            margin-top: .5rem;
+            font-size: .85rem;
+            opacity: .75;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* ── Container ── */
+        .container {
+            max-width: 860px;
+            margin: 0 auto;
+            padding: 0 1.5rem 3rem;
+        }
+
+        /* ── Section ── */
+        .section {
+            background: var(--card);
+            border-radius: 12px;
+            padding: 2rem;
+            margin-top: 1.5rem;
+            box-shadow: 0 1px 4px rgba(0,0,0,.06);
+        }
+        .section h2 {
+            font-size: 1.35rem;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: .5rem;
+        }
+        .section h2 .icon { font-size: 1.3rem; }
+
+        /* ── Feature Grid ── */
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 1rem;
+        }
+        .feature-card {
+            background: #fafafa;
+            padding: 1.2rem;
+            border-radius: 10px;
+            border-left: 3px solid var(--red);
+        }
+        .feature-card h3 { font-size: 1rem; margin-bottom: .4rem; }
+        .feature-card p { font-size: .9rem; color: var(--muted); }
+
+        /* ── Steps ── */
+        .steps { counter-reset: step; }
+        .step {
+            display: flex;
+            gap: 1rem;
+            align-items: flex-start;
+            padding: .8rem 0;
+            border-bottom: 1px solid #eee;
+        }
+        .step:last-child { border-bottom: none; }
+        .step-num {
+            counter-increment: step;
+            background: var(--red);
+            color: #fff;
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: .9rem;
+            flex-shrink: 0;
+            margin-top: 2px;
+        }
+        .step-body h4 { font-size: 1rem; margin-bottom: .2rem; }
+        .step-body p { color: var(--muted); font-size: .9rem; }
+        .step-body a { color: var(--red); }
+
+        /* ── Carousel ── */
+        .carousel {
+            position: relative;
+            overflow: hidden;
+            border-radius: 10px;
+            background: #1a1a2e;
+        }
+        .carousel-track {
+            display: flex;
+            align-items: flex-start;
+            transition: transform .4s ease;
+        }
+        .carousel-slide {
+            min-width: 100%;
+            position: relative;
+            line-height: 0;
+        }
+        .carousel-slide img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+        .carousel-caption {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(transparent, rgba(0,0,0,.75));
+            color: #fff;
+            padding: 2rem 1.5rem 1.2rem;
+            font-size: .95rem;
+        }
+        .carousel-btn {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(255,255,255,.85);
+            border: none;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            font-size: 1.1rem;
+            cursor: pointer;
+            z-index: 10;
+            transition: background .2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--dark);
+            box-shadow: 0 2px 8px rgba(0,0,0,.15);
+        }
+        .carousel-btn:hover { background: #fff; }
+        .carousel-prev { left: 1rem; }
+        .carousel-next { right: 1rem; }
+        .carousel-dots {
+            position: absolute;
+            bottom: 3.5rem;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: .5rem;
+            z-index: 10;
+        }
+        .carousel-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: rgba(255,255,255,.4);
+            border: none;
+            cursor: pointer;
+            transition: background .2s;
+            padding: 0;
+        }
+        .carousel-dot.active { background: #fff; }
+
+        /* ── Price Table ── */
+        .price-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+            gap: .8rem;
+        }
+        .price-card {
+            background: #fafafa;
+            border: 2px solid #eee;
+            border-radius: 10px;
+            padding: 1.5rem 1rem;
+            text-align: center;
+            transition: border-color .2s;
+        }
+        .price-card:hover { border-color: var(--red); }
+        .price-card.featured {
+            border-color: var(--red);
+            background: #fff5f5;
+        }
+        .price-card .name { font-weight: 700; font-size: 1.1rem; margin-bottom: .3rem; }
+        .price-card .duration { font-size: .8rem; color: var(--muted); margin-bottom: .8rem; }
+        .price-card .money { font-size: 1.6rem; font-weight: 800; color: var(--red); }
+        .price-card .money span { font-size: .8rem; font-weight: 400; }
+        .price-card .scene { font-size: .8rem; color: var(--muted); margin-top: .5rem; }
+
+        /* ── FAQ ── */
+        .faq-item {
+            border: 1px solid #eee;
+            border-radius: 10px;
+            margin-bottom: .8rem;
+            overflow: hidden;
+        }
+        .faq-q {
+            background: #fafafa;
+            padding: 1rem 1.2rem;
+            font-weight: 600;
+            font-size: .95rem;
+            cursor: default;
+            user-select: none;
+        }
+        .faq-a {
+            padding: 1rem 1.2rem;
+            font-size: .9rem;
+            color: var(--muted);
+            border-top: 1px solid #eee;
+        }
+
+        /* ── Tech Table ── */
+        .tech-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            gap: .6rem;
+        }
+        .tech-item {
+            background: #fafafa;
+            padding: .7rem 1rem;
+            border-radius: 8px;
+            text-align: center;
+            font-size: .85rem;
+        }
+        .tech-item strong { display: block; font-size: .95rem; margin-bottom: .1rem; }
+
+        /* ── Footer CTA ── */
+        .footer-cta {
+            background: linear-gradient(135deg, #1a1a2e, #2d2d44);
+            color: #fff;
+            text-align: center;
+            padding: 3rem 2rem;
+            margin-top: 2rem;
+            border-radius: 12px;
+        }
+        .footer-cta h3 { font-size: 1.4rem; margin-bottom: .5rem; }
+        .footer-cta p { opacity: .8; margin-bottom: 1.5rem; }
+        .footer-cta a {
+            display: inline-block;
+            background: var(--red);
+            color: #fff;
+            padding: 14px 48px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 1.1rem;
+            transition: transform .15s;
+        }
+        .footer-cta a:hover { transform: scale(1.03); }
+
+        /* ── Footer ── */
+        .site-footer {
+            text-align: center;
+            padding: 2rem 0;
+            color: #aaa;
+            font-size: .85rem;
+        }
+        .site-footer a { color: #999; text-decoration: none; }
+
+        /* ── Responsive ── */
+        @media (max-width: 600px) {
+            .hero h1 { font-size: 1.7rem; }
+            .section { padding: 1.2rem; }
+            .price-grid { grid-template-columns: 1fr 1fr; }
+            .feature-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+
+<!-- ═══════════ Language Switcher ═══════════ -->
+<div class="lang-switcher">
+    <button class="lang-btn active" onclick="switchLang('zh-CN')">中文</button>
+    <button class="lang-btn" onclick="switchLang('en')">EN</button>
+</div>
+
+<!-- ═══════════ HERO ═══════════ -->
+<header class="hero">
+
+    <h1 class="lang-zh">📕 小红书聚合采集</h1>
+    <h1 class="lang-en">📕 Xiaohongshu Crawler</h1>
+
+    <p class="lang-zh">关键词搜索笔记 · 评论采集 · 博主主页采集 · 图片下载 · CSV 导出，GUI 开箱即用</p>
+    <p class="lang-en">Keyword search · Comment crawling · Blogger posts · Image download · CSV export — all in a ready-to-use GUI</p>
+
+    <div class="badges lang-zh">
+        <span class="badge">🖥️ Windows + macOS</span>
+        <span class="badge">🚀 无需 Python 环境</span>
+        <span class="badge">🍪 内置 Cookie 工具</span>
+        <span class="badge">📦 开箱即用</span>
+    </div>
+    <div class="badges lang-en">
+        <span class="badge">🖥️ Windows + macOS</span>
+        <span class="badge">🚀 No Python required</span>
+        <span class="badge">🍪 Built-in Cookie Tool</span>
+        <span class="badge">📦 Ready to use</span>
+    </div>
+
+    <a class="cta-btn" href="https://mgnb.pro/product/xhs" target="_blank">
+        <span class="lang-zh">💰 立即开通使用</span>
+        <span class="lang-en">💰 Get Started Now</span>
+    </a>
+    <span class="cta-sub lang-zh">日卡 ¥39 起 · 一机一码 · 持续更新维护</span>
+    <span class="cta-sub lang-en">Starting at ¥39/day · One device per license · Actively maintained</span>
+</header>
+
+<div class="container">
+
+<!-- ═══════════ 简介 ═══════════ -->
+<div class="section">
+    <h2>
+        <span class="lang-zh"><span class="icon">👋</span> 软件简介</span>
+        <span class="lang-en"><span class="icon">👋</span> Overview</span>
+    </h2>
+    <p class="lang-zh">
+        <strong>xhs_one_spider</strong> 是一款面向小红书内容数据采集场景的桌面 GUI 工具。
+        支持关键词搜索笔记采集、指定笔记评论采集、博主主页笔记采集、笔记图片批量下载，
+        以及小红书链接与用户 UID 互转等功能，所有数据均可导出为 CSV 文件。
+        用户无需配置 Python 环境，下载客户端后登录即可使用。
+    </p>
+    <p class="lang-en">
+        <strong>xhs_one_spider</strong> is a desktop GUI tool for Xiaohongshu (RED) data collection.
+        Supports keyword-based note crawling, comment scraping, blogger profile posts,
+        image batch downloading, and URL-to-UID conversion — all exported as CSV.
+        No Python setup required — just download and run.
+    </p>
+</div>
+
+<!-- ═══════════ 适用场景 ═══════════ -->
+<div class="section">
+    <h2>
+        <span class="lang-zh"><span class="icon">🎯</span> 适用场景</span>
+        <span class="lang-en"><span class="icon">🎯</span> Use Cases</span>
+    </h2>
+    <div class="feature-grid">
+        <div class="feature-card">
+            <h3><span class="lang-zh">🎣 获客截流</span><span class="lang-en">🎣 Lead Generation</span></h3>
+            <p class="lang-zh">按关键词搜索目标笔记，采集评论区潜在客户，实现精准获客</p>
+            <p class="lang-en">Search target notes by keyword, capture potential leads from comments</p>
+        </div>
+        <div class="feature-card">
+            <h3><span class="lang-zh">🌿 种草分析</span><span class="lang-en">🌿 Content Analysis</span></h3>
+            <p class="lang-zh">采集竞品种草笔记和用户反馈，分析内容策略和用户偏好</p>
+            <p class="lang-en">Collect competitor content and user feedback to analyze strategy and preferences</p>
+        </div>
+        <div class="feature-card">
+            <h3><span class="lang-zh">✍️ 内容创作</span><span class="lang-en">✍️ Content Creation</span></h3>
+            <p class="lang-zh">分析热门笔记的标题、标签和互动数据，指导内容选题和优化</p>
+            <p class="lang-en">Analyze trending note titles, tags, and engagement to guide content planning</p>
+        </div>
+        <div class="feature-card">
+            <h3><span class="lang-zh">📈 小红书运营</span><span class="lang-en">📈 RED Operations</span></h3>
+            <p class="lang-zh">监控博主数据、跟踪行业趋势，辅助小红书账号运营决策</p>
+            <p class="lang-en">Monitor blogger data and industry trends to support RED account operations</p>
+        </div>
+    </div>
+</div>
+
+<!-- ═══════════ 功能概览 ═══════════ -->
+<div class="section">
+    <h2>
+        <span class="lang-zh"><span class="icon">⚙️</span> 功能概览</span>
+        <span class="lang-en"><span class="icon">⚙️</span> Features</span>
+    </h2>
+    <div class="feature-grid">
+        <div class="feature-card">
+            <h3>✅ <span class="lang-zh">搜索笔记采集</span><span class="lang-en">Search Note Crawling</span></h3>
+            <p class="lang-zh">按关键词搜索并批量采集笔记，支持多关键词同时采集</p>
+            <p class="lang-en">Search and batch-crawl notes by keywords with multi-keyword support</p>
+        </div>
+        <div class="feature-card">
+            <h3>✅ <span class="lang-zh">评论采集</span><span class="lang-en">Comment Crawling</span></h3>
+            <p class="lang-zh">采集指定笔记的全部评论，包含评论内容、作者、时间等</p>
+            <p class="lang-en">Crawl all comments from specific notes — content, author, timestamps</p>
+        </div>
+        <div class="feature-card">
+            <h3>✅ <span class="lang-zh">博主笔记采集</span><span class="lang-en">Blogger Post Crawling</span></h3>
+            <p class="lang-zh">采集指定博主主页的全部笔记及互动数据</p>
+            <p class="lang-en">Crawl all posts and engagement data from a blogger's profile</p>
+        </div>
+        <div class="feature-card">
+            <h3>✅ <span class="lang-zh">链接 / UID 转换</span><span class="lang-en">URL / UID Conversion</span></h3>
+            <p class="lang-zh">支持小红书链接与用户 UID 互转，快速定位目标用户</p>
+            <p class="lang-en">Convert between RED URLs and user UIDs to quickly locate targets</p>
+        </div>
+        <div class="feature-card">
+            <h3>✅ <span class="lang-zh">自动保存</span><span class="lang-en">Auto-save</span></h3>
+            <p class="lang-zh">采集过程中持续保存，降低中断丢数风险</p>
+            <p class="lang-en">Continuous saving during crawling to prevent data loss</p>
+        </div>
+        <div class="feature-card">
+            <h3>✅ <span class="lang-zh">运行日志</span><span class="lang-en">Activity Log</span></h3>
+            <p class="lang-zh">自动记录运行过程，方便事后排查问题</p>
+            <p class="lang-en">Detailed logs for troubleshooting</p>
+        </div>
+    </div>
+</div>
+
+<!-- ═══════════ 快速开始 ═══════════ -->
+<div class="section">
+    <h2>
+        <span class="lang-zh"><span class="icon">🚀</span> 快速开始</span>
+        <span class="lang-en"><span class="icon">🚀</span> Quick Start</span>
+    </h2>
+    <div class="steps lang-zh">
+        <div class="step"><div class="step-num"></div><div class="step-body"><h4>下载软件</h4><p>前往 <a href="https://github.com/mashukui/xhs_one_spider/releases/" target="_blank">GitHub Releases</a> 下载最新版客户端</p></div></div>
+        <div class="step"><div class="step-num"></div><div class="step-body"><h4>解压运行</h4><p>解压后双击运行对应系统的客户端（Windows 或 macOS）</p></div></div>
+        <div class="step"><div class="step-num"></div><div class="step-body"><h4>配置 Cookie</h4><p>使用内置的 <strong>Cookie 小工具</strong> 获取并配置小红书登录凭证，确保采集正常进行</p></div></div>
+        <div class="step"><div class="step-num"></div><div class="step-body"><h4>登录账号</h4><p>使用购买后获得的卡密登录软件</p></div></div>
+        <div class="step"><div class="step-num"></div><div class="step-body"><h4>填写关键词 / 链接</h4><p>在「搜索关键词.txt」中填写搜索词，或在「笔记链接.txt」中填写目标笔记链接</p></div></div>
+        <div class="step"><div class="step-num"></div><div class="step-body"><h4>开始采集</h4><p>点击对应功能按钮，等待采集完成</p></div></div>
+        <div class="step"><div class="step-num"></div><div class="step-body"><h4>查看结果</h4><p>在软件所在目录查看 CSV 结果文件和下载的图片</p></div></div>
+    </div>
+    <div class="steps lang-en">
+        <div class="step"><div class="step-num"></div><div class="step-body"><h4>Download</h4><p>Get the latest release from <a href="https://github.com/mashukui/xhs_one_spider/releases/" target="_blank">GitHub Releases</a></p></div></div>
+        <div class="step"><div class="step-num"></div><div class="step-body"><h4>Extract & Run</h4><p>Unzip and launch the client for your OS (Windows or macOS)</p></div></div>
+        <div class="step"><div class="step-num"></div><div class="step-body"><h4>Configure Cookie</h4><p>Use the built-in <strong>Cookie Tool</strong> to obtain and set your Xiaohongshu login session</p></div></div>
+        <div class="step"><div class="step-num"></div><div class="step-body"><h4>Login</h4><p>Log in using the license key from your purchase</p></div></div>
+        <div class="step"><div class="step-num"></div><div class="step-body"><h4>Add Keywords / URLs</h4><p>Enter search keywords or target note URLs in the input files</p></div></div>
+        <div class="step"><div class="step-num"></div><div class="step-body"><h4>Start Crawling</h4><p>Click the function button and wait for the crawl to complete</p></div></div>
+        <div class="step"><div class="step-num"></div><div class="step-body"><h4>View Results</h4><p>Open the CSV files and downloaded images in the app directory</p></div></div>
+    </div>
+</div>
+
+<!-- ═══════════ 截图展示 ═══════════ -->
+<div class="section">
+    <h2>
+        <span class="lang-zh"><span class="icon">🖼️</span> 功能展示</span>
+        <span class="lang-en"><span class="icon">🖼️</span> Screenshots</span>
+    </h2>
+    <div class="carousel" id="carousel">
+        <div class="carousel-track" id="carouselTrack">
+            <div class="carousel-slide">
+                <img src="images/s01.jpg" alt="采集评论界面">
+                <div class="carousel-caption lang-zh">📥 采集评论界面：输入笔记链接，一键启动评论采集</div>
+                <div class="carousel-caption lang-en">📥 Comment Crawler — paste note URLs and start with one click</div>
+            </div>
+            <div class="carousel-slide">
+                <img src="images/s02.png" alt="搜索笔记结果">
+                <div class="carousel-caption lang-zh">🔍 搜索笔记结果：按关键词搜索，导出结构化 CSV 数据</div>
+                <div class="carousel-caption lang-en">🔍 Search Results — keyword-based search with structured CSV export</div>
+            </div>
+            <div class="carousel-slide">
+                <img src="images/s03.png" alt="评论采集结果">
+                <div class="carousel-caption lang-zh">💬 评论采集结果：包含评论内容、作者、点赞数等完整字段</div>
+                <div class="carousel-caption lang-en">💬 Comment Results — full fields including content, author, and likes</div>
+            </div>
+            <div class="carousel-slide">
+                <img src="images/s04.png" alt="下载的笔记图片">
+                <div class="carousel-caption lang-zh">🖼️ 下载的笔记图片：自动批量下载笔记中的图片资源</div>
+                <div class="carousel-caption lang-en">🖼️ Downloaded Images — auto batch-download note images</div>
+            </div>
+            <div class="carousel-slide">
+                <img src="images/s05.jpg" alt="博主笔记采集界面">
+                <div class="carousel-caption lang-zh">👤 博主笔记采集界面：输入博主链接，批量采集全部笔记</div>
+                <div class="carousel-caption lang-en">👤 Blogger Crawler — input blogger URL to batch-crawl all posts</div>
+            </div>
+            <div class="carousel-slide">
+                <img src="images/s06.png" alt="博主笔记结果">
+                <div class="carousel-caption lang-zh">📊 博主笔记结果：博主主页全部笔记数据，支持 CSV 导出</div>
+                <div class="carousel-caption lang-en">📊 Blogger Post Results — all profile posts with CSV export</div>
+            </div>
+            <div class="carousel-slide">
+                <img src="images/s07.png" alt="下载的博主图片">
+                <div class="carousel-caption lang-zh">📸 下载的博主图片：批量下载博主笔记中所有图片</div>
+                <div class="carousel-caption lang-en">📸 Downloaded Blogger Images — batch download all images from blogger posts</div>
+            </div>
+            <div class="carousel-slide">
+                <img src="images/s08.jpg" alt="链接转xhs号">
+                <div class="carousel-caption lang-zh">🔗 链接转小红书号：批量将分享链接转换为小红书号 / UID</div>
+                <div class="carousel-caption lang-en">🔗 URL to RED ID — batch convert share links to RED ID / UID</div>
+            </div>
+        </div>
+        <button class="carousel-btn carousel-prev" onclick="moveSlide(-1)">◀</button>
+        <button class="carousel-btn carousel-next" onclick="moveSlide(1)">▶</button>
+        <div class="carousel-dots" id="carouselDots">
+            <button class="carousel-dot active" onclick="goToSlide(0)"></button>
+            <button class="carousel-dot" onclick="goToSlide(1)"></button>
+            <button class="carousel-dot" onclick="goToSlide(2)"></button>
+            <button class="carousel-dot" onclick="goToSlide(3)"></button>
+            <button class="carousel-dot" onclick="goToSlide(4)"></button>
+            <button class="carousel-dot" onclick="goToSlide(5)"></button>
+            <button class="carousel-dot" onclick="goToSlide(6)"></button>
+            <button class="carousel-dot" onclick="goToSlide(7)"></button>
+        </div>
+    </div>
+</div>
+
+<!-- ═══════════ 输出数据说明 ═══════════ -->
+<div class="section">
+    <h2>
+        <span class="lang-zh"><span class="icon">📊</span> 输出数据说明</span>
+        <span class="lang-en"><span class="icon">📊</span> Output Fields</span>
+    </h2>
+    <p class="lang-zh" style="margin-bottom:1rem;">采集完成后生成结构化 CSV 文件，涵盖以下数据维度：</p>
+    <p class="lang-en" style="margin-bottom:1rem;">After crawling, structured CSV files are generated covering the following data dimensions:</p>
+    <div class="feature-grid">
+        <div class="feature-card">
+            <h3><span class="lang-zh">📋 搜索笔记（19 字段）</span><span class="lang-en">📋 Search Notes (19 fields)</span></h3>
+            <p class="lang-zh">笔记ID、标题、正文、发布时间、作者昵称、作者ID、点赞数、收藏数、评论数、分享数、图片链接、笔记链接、标签等</p>
+            <p class="lang-en">Note ID, title, content, publish time, author name, author ID, likes, favorites, comments, shares, image URLs, note URL, tags, etc.</p>
+        </div>
+        <div class="feature-card">
+            <h3><span class="lang-zh">💬 评论数据</span><span class="lang-en">💬 Comment Data</span></h3>
+            <p class="lang-zh">评论内容、评论作者、评论时间、点赞数、回复数、子评论等完整字段</p>
+            <p class="lang-en">Comment content, author, timestamp, likes, replies, sub-comments, and more</p>
+        </div>
+        <div class="feature-card">
+            <h3><span class="lang-zh">👤 博主笔记</span><span class="lang-en">👤 Blogger Posts</span></h3>
+            <p class="lang-zh">博主全部笔记数据，包含笔记详情、互动指标和图片资源下载</p>
+            <p class="lang-en">All blogger posts with full details, engagement metrics, and image downloads</p>
+        </div>
+    </div>
+</div>
+
+<!-- ═══════════ 价格 ═══════════ -->
+<div class="section">
+    <h2>
+        <span class="lang-zh"><span class="icon">💰</span> 价格说明</span>
+        <span class="lang-en"><span class="icon">💰</span> Pricing</span>
+    </h2>
+    <!-- prices are the same in both languages so no duplication needed -->
+    <div class="price-grid">
+        <div class="price-card">
+            <div class="name lang-zh">日卡</div><div class="name lang-en">Daily</div>
+            <div class="duration lang-zh">使用期限 1 天</div><div class="duration lang-en">1 day</div>
+            <div class="money">¥39</div>
+            <div class="scene lang-zh">临时试用、小批量任务</div>
+            <div class="scene lang-en">Trial / small tasks</div>
+        </div>
+        <div class="price-card featured">
+            <div class="name lang-zh">月卡</div><div class="name lang-en">Monthly</div>
+            <div class="duration lang-zh">使用期限 1 个月</div><div class="duration lang-en">1 month</div>
+            <div class="money">¥149</div>
+            <div class="scene lang-zh">⭐ 短期采集需求</div>
+            <div class="scene lang-en">⭐ Short-term needs</div>
+        </div>
+        <div class="price-card">
+            <div class="name lang-zh">季卡</div><div class="name lang-en">Quarterly</div>
+            <div class="duration lang-zh">使用期限 3 个月</div><div class="duration lang-en">3 months</div>
+            <div class="money">¥399</div>
+            <div class="scene lang-zh">中期采集需求</div>
+            <div class="scene lang-en">Medium-term needs</div>
+        </div>
+        <div class="price-card">
+            <div class="name lang-zh">年卡</div><div class="name lang-en">Yearly</div>
+            <div class="duration lang-zh">使用期限 1 年</div><div class="duration lang-en">1 year</div>
+            <div class="money">¥799</div>
+            <div class="scene lang-zh">长期稳定使用</div>
+            <div class="scene lang-en">Long-term use</div>
+        </div>
+    </div>
+    <p style="text-align:center;margin-top:1.2rem;">
+        <a href="https://mgnb.pro/product/xhs" target="_blank" style="color:var(--red);font-weight:600;">
+            <span class="lang-zh">👉 立即开通</span>
+            <span class="lang-en">👉 Purchase Now</span>
+        </a>
+    </p>
+</div>
+
+<!-- ═══════════ 技术说明 ═══════════ -->
+<div class="section">
+    <h2>
+        <span class="lang-zh"><span class="icon">🛠️</span> 技术说明</span>
+        <span class="lang-en"><span class="icon">🛠️</span> Tech Stack</span>
+    </h2>
+    <p class="lang-zh" style="margin-bottom:1rem;">采用 Python 开发，通过接口请求采集数据，不依赖浏览器自动化：</p>
+    <p class="lang-en" style="margin-bottom:1rem;">Built with Python. Data is fetched via API — no browser automation required:</p>
+    <div class="tech-grid">
+        <div class="tech-item"><strong>tkinter</strong><span class="lang-zh">GUI 界面</span><span class="lang-en">GUI</span></div>
+        <div class="tech-item"><strong>requests</strong><span class="lang-zh">接口请求</span><span class="lang-en">HTTP client</span></div>
+        <div class="tech-item"><strong>json</strong><span class="lang-zh">数据解析</span><span class="lang-en">Data parsing</span></div>
+        <div class="tech-item"><strong>csv</strong><span class="lang-zh">CSV 导出</span><span class="lang-en">CSV export</span></div>
+        <div class="tech-item"><strong>logging</strong><span class="lang-zh">日志记录</span><span class="lang-en">Activity log</span></div>
+    </div>
+</div>
+
+<!-- ═══════════ 授权规则 ═══════════ -->
+<div class="section">
+    <h2>
+        <span class="lang-zh"><span class="icon">🔐</span> 授权规则</span>
+        <span class="lang-en"><span class="icon">🔐</span> License</span>
+    </h2>
+    <ul style="padding-left:1.2rem;line-height:2;list-style:none;">
+        <li class="lang-zh">🔑 一机一码机制，一个卡密仅支持一台电脑使用</li>
+        <li class="lang-en">🔑 One license per device — each key works on a single computer</li>
+        <li class="lang-zh">🚫 一台电脑仅允许运行一个软件实例，不支持多开</li>
+        <li class="lang-en">🚫 Single instance only — no multi-launch on the same computer</li>
+        <li class="lang-zh">🔄 软件由作者长期维护，后续版本通过 <a href="https://github.com/mashukui/xhs_one_spider/releases/" target="_blank">GitHub Releases</a> 发布</li>
+        <li class="lang-en">🔄 Actively maintained — new versions released via <a href="https://github.com/mashukui/xhs_one_spider/releases/" target="_blank">GitHub Releases</a></li>
+    </ul>
+</div>
+
+<!-- ═══════════ FAQ ═══════════ -->
+<div class="section">
+    <h2>
+        <span class="lang-zh"><span class="icon">❓</span> 常见问题</span>
+        <span class="lang-en"><span class="icon">❓</span> FAQ</span>
+    </h2>
+
+    <div class="faq-item lang-zh">
+        <div class="faq-q">🟢 是否需要安装 Python？</div>
+        <div class="faq-a">不需要。软件已打包为桌面客户端，下载对应系统版本后即可运行。</div>
+    </div>
+    <div class="faq-item lang-en">
+        <div class="faq-q">🟢 Do I need to install Python?</div>
+        <div class="faq-a">No. The software is packaged as a standalone desktop app — just download and run.</div>
+    </div>
+
+    <div class="faq-item lang-zh">
+        <div class="faq-q">🟢 Cookie 如何配置？</div>
+        <div class="faq-a">软件内置 <strong>Cookie 小工具</strong>，打开后按提示扫码或粘贴即可自动获取小红书登录凭证，无需手动抓包。</div>
+    </div>
+    <div class="faq-item lang-en">
+        <div class="faq-q">🟢 How do I set up the Cookie?</div>
+        <div class="faq-a">The software includes a built-in <strong>Cookie Tool</strong> — simply scan the QR code or paste as prompted to automatically obtain your Xiaohongshu login session. No manual packet capture needed.</div>
+    </div>
+
+    <div class="faq-item lang-zh">
+        <div class="faq-q">🟢 采集中断后数据会丢失吗？</div>
+        <div class="faq-a">不会。软件在采集过程中持续保存结果，网络异常或任务中断不会丢失已采集的数据。</div>
+    </div>
+    <div class="faq-item lang-en">
+        <div class="faq-q">🟢 Will I lose data if crawling is interrupted?</div>
+        <div class="faq-a">No. Results are saved continuously — network issues or interruptions won't wipe collected data.</div>
+    </div>
+
+    <div class="faq-item lang-zh">
+        <div class="faq-q">🟢 支持导出哪些格式？</div>
+        <div class="faq-a">支持导出 CSV 格式（UTF-8 编码），可直接使用 Excel / WPS / Numbers 打开，也方便导入数据库或进行二次分析。</div>
+    </div>
+    <div class="faq-item lang-en">
+        <div class="faq-q">🟢 What export formats are supported?</div>
+        <div class="faq-a">CSV format (UTF-8 encoding). Open directly in Excel / WPS / Numbers, or import into databases for further analysis.</div>
+    </div>
+</div>
+
+<!-- ═══════════ 底部 CTA ═══════════ -->
+<div class="footer-cta">
+    <h3 class="lang-zh">📕 准备好开始了吗？</h3>
+    <h3 class="lang-en">📕 Ready to get started?</h3>
+    <p class="lang-zh">日卡仅需 ¥39，立即体验小红书数据聚合采集</p>
+    <p class="lang-en">Start at just ¥39/day — try Xiaohongshu data crawling today</p>
+    <a href="https://mgnb.pro/product/xhs" target="_blank">
+        <span class="lang-zh">💰 立即开通使用</span>
+        <span class="lang-en">💰 Get Started Now</span>
+    </a>
+</div>
+
+<!-- ═══════════ Footer ═══════════ -->
+<div class="site-footer">
+    <p>© 2026 马哥python说 · Powered by <a href="https://pages.github.com/" target="_blank">GitHub Pages</a></p>
+    <p style="margin-top:.3rem;">
+        <a href="https://github.com/mashukui/xhs_one_spider" target="_blank">
+            <span class="lang-zh">GitHub 仓库</span><span class="lang-en">GitHub Repo</span>
+        </a> ·
+        <a href="https://github.com/mashukui/xhs_one_spider/releases/" target="_blank">
+            <span class="lang-zh">版本下载</span><span class="lang-en">Releases</span>
+        </a> ·
+        <a href="https://www.bilibili.com/video/BV1Z6rHBfExT/" target="_blank">
+            <span class="lang-zh">B站演示</span><span class="lang-en">Bilibili Demo</span>
+        </a> ·
+        <a href="https://mgnb.pro/product/xhs" target="_blank">
+            <span class="lang-zh">开通使用</span><span class="lang-en">Purchase</span>
+        </a>
+    </p>
+</div>
+
+</div>
+
+<script>
+var currentSlide = 0;
+var totalSlides = 8;
+var track = document.getElementById('carouselTrack');
+var dots = document.querySelectorAll('.carousel-dot');
+var autoTimer;
+
+function updateCarousel() {
+    track.style.transform = 'translateX(-' + (currentSlide * 100) + '%)';
+    dots.forEach(function(d, i) { d.classList.toggle('active', i === currentSlide); });
+}
+function moveSlide(dir) {
+    currentSlide = (currentSlide + dir + totalSlides) % totalSlides;
+    updateCarousel();
+    resetAuto();
+}
+function goToSlide(n) {
+    currentSlide = n;
+    updateCarousel();
+    resetAuto();
+}
+function resetAuto() {
+    clearInterval(autoTimer);
+    autoTimer = setInterval(function() { moveSlide(1); }, 5000);
+}
+var touchStartX = 0;
+track.addEventListener('touchstart', function(e) { touchStartX = e.touches[0].clientX; });
+track.addEventListener('touchend', function(e) {
+    var diff = touchStartX - e.changedTouches[0].clientX;
+    if (Math.abs(diff) > 50) moveSlide(diff > 0 ? 1 : -1);
+});
+autoTimer = setInterval(function() { moveSlide(1); }, 5000);
+
+function switchLang(lang) {
+    document.documentElement.setAttribute('lang', lang);
+    document.querySelectorAll('.lang-btn').forEach(function(btn) {
+        btn.classList.toggle('active',
+            btn.textContent.trim() === (lang === 'zh-CN' ? '中文' : 'EN'));
+    });
+    // save preference
+    try { localStorage.setItem('xhs-one-lang', lang); } catch(e) {}
+}
+// load saved preference, default to zh-CN
+(function() {
+    var saved = 'zh-CN';
+    try { saved = localStorage.getItem('xhs-one-lang') || 'zh-CN'; } catch(e) {}
+    switchLang(saved);
+})();
+</script>
+
+</body>
+</html>
