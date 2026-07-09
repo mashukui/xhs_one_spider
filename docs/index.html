@@ -229,15 +229,19 @@
             height: auto;
             display: block;
         }
-        .carousel-caption {
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            background: linear-gradient(transparent, rgba(0,0,0,.75));
+        .carousel-caption-bar {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 52px;
             color: #fff;
-            padding: 2rem 1.5rem 1.2rem;
+            background: #1a1a2e;
+            border-top: 1px solid rgba(255,255,255,.12);
+            padding: .85rem 4.5rem;
             font-size: .95rem;
+            font-weight: 600;
+            text-align: center;
+            line-height: 1.45;
         }
         .carousel-btn {
             position: absolute;
@@ -263,12 +267,15 @@
         .carousel-next { right: 1rem; }
         .carousel-dots {
             position: absolute;
-            bottom: 3.5rem;
+            bottom: 4.6rem;
             left: 50%;
             transform: translateX(-50%);
             display: flex;
             gap: .5rem;
             z-index: 10;
+            flex-wrap: wrap;
+            justify-content: center;
+            padding: 0 1rem;
         }
         .carousel-dot {
             width: 10px;
@@ -552,43 +559,27 @@
         <div class="carousel-track" id="carouselTrack">
             <div class="carousel-slide">
                 <img src="images/s01.jpg" alt="采集评论界面">
-                <div class="carousel-caption lang-zh">📥 采集评论界面：输入笔记链接，一键启动评论采集</div>
-                <div class="carousel-caption lang-en">📥 Comment Crawler — paste note URLs and start with one click</div>
             </div>
             <div class="carousel-slide">
                 <img src="images/s02.png" alt="搜索笔记结果">
-                <div class="carousel-caption lang-zh">🔍 搜索笔记结果：按关键词搜索，导出结构化 CSV 数据</div>
-                <div class="carousel-caption lang-en">🔍 Search Results — keyword-based search with structured CSV export</div>
             </div>
             <div class="carousel-slide">
                 <img src="images/s03.png" alt="评论采集结果">
-                <div class="carousel-caption lang-zh">💬 评论采集结果：包含评论内容、作者、点赞数等完整字段</div>
-                <div class="carousel-caption lang-en">💬 Comment Results — full fields including content, author, and likes</div>
             </div>
             <div class="carousel-slide">
                 <img src="images/s04.png" alt="下载的笔记图片">
-                <div class="carousel-caption lang-zh">🖼️ 下载的笔记图片：自动批量下载笔记中的图片资源</div>
-                <div class="carousel-caption lang-en">🖼️ Downloaded Images — auto batch-download note images</div>
             </div>
             <div class="carousel-slide">
                 <img src="images/s05.jpg" alt="博主笔记采集界面">
-                <div class="carousel-caption lang-zh">👤 博主笔记采集界面：输入博主链接，批量采集全部笔记</div>
-                <div class="carousel-caption lang-en">👤 Blogger Crawler — input blogger URL to batch-crawl all posts</div>
             </div>
             <div class="carousel-slide">
                 <img src="images/s06.png" alt="博主笔记结果">
-                <div class="carousel-caption lang-zh">📊 博主笔记结果：博主主页全部笔记数据，支持 CSV 导出</div>
-                <div class="carousel-caption lang-en">📊 Blogger Post Results — all profile posts with CSV export</div>
             </div>
             <div class="carousel-slide">
                 <img src="images/s07.png" alt="下载的博主图片">
-                <div class="carousel-caption lang-zh">📸 下载的博主图片：批量下载博主笔记中所有图片</div>
-                <div class="carousel-caption lang-en">📸 Downloaded Blogger Images — batch download all images from blogger posts</div>
             </div>
             <div class="carousel-slide">
                 <img src="images/s08.jpg" alt="链接转xhs号">
-                <div class="carousel-caption lang-zh">🔗 链接转小红书号：批量将分享链接转换为小红书号 / UID</div>
-                <div class="carousel-caption lang-en">🔗 URL to RED ID — batch convert share links to RED ID / UID</div>
             </div>
         </div>
         <button class="carousel-btn carousel-prev" onclick="moveSlide(-1)">◀</button>
@@ -603,6 +594,7 @@
             <button class="carousel-dot" onclick="goToSlide(6)"></button>
             <button class="carousel-dot" onclick="goToSlide(7)"></button>
         </div>
+        <div class="carousel-caption-bar" id="carouselCaption">📥 采集评论界面：输入笔记链接，一键启动评论采集</div>
     </div>
 </div>
 
@@ -793,11 +785,24 @@ var currentSlide = 0;
 var totalSlides = 8;
 var track = document.getElementById('carouselTrack');
 var dots = document.querySelectorAll('.carousel-dot');
+var caption = document.getElementById('carouselCaption');
 var autoTimer;
+var captions = [
+    { zh: '📥 采集评论界面：输入笔记链接，一键启动评论采集', en: '📥 Comment Crawler — paste note URLs and start with one click' },
+    { zh: '🔍 搜索笔记结果：按关键词搜索，导出结构化 CSV 数据', en: '🔍 Search Results — keyword-based search with structured CSV export' },
+    { zh: '💬 评论采集结果：包含评论内容、作者、点赞数等完整字段', en: '💬 Comment Results — full fields including content, author, and likes' },
+    { zh: '🖼️ 下载的笔记图片：自动批量下载笔记中的图片资源', en: '🖼️ Downloaded Images — auto batch-download note images' },
+    { zh: '👤 博主笔记采集界面：输入博主链接，批量采集全部笔记', en: '👤 Blogger Crawler — input blogger URL to batch-crawl all posts' },
+    { zh: '📊 博主笔记结果：博主主页全部笔记数据，支持 CSV 导出', en: '📊 Blogger Post Results — all profile posts with CSV export' },
+    { zh: '📸 下载的博主图片：批量下载博主笔记中所有图片', en: '📸 Downloaded Blogger Images — batch download all images from blogger posts' },
+    { zh: '🔗 链接转小红书号：批量将分享链接转换为小红书号 / UID', en: '🔗 URL to RED ID — batch convert share links to RED ID / UID' }
+];
 
 function updateCarousel() {
     track.style.transform = 'translateX(-' + (currentSlide * 100) + '%)';
     dots.forEach(function(d, i) { d.classList.toggle('active', i === currentSlide); });
+    var lang = document.documentElement.getAttribute('lang') === 'en' ? 'en' : 'zh';
+    caption.textContent = captions[currentSlide][lang];
 }
 function moveSlide(dir) {
     currentSlide = (currentSlide + dir + totalSlides) % totalSlides;
@@ -827,6 +832,7 @@ function switchLang(lang) {
         btn.classList.toggle('active',
             btn.textContent.trim() === (lang === 'zh-CN' ? '中文' : 'EN'));
     });
+    updateCarousel();
     // save preference
     try { localStorage.setItem('xhs-one-lang', lang); } catch(e) {}
 }
