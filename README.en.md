@@ -1,4 +1,10 @@
+<div align="center">
+
 # xhs_one_spider
+
+[![Release](https://img.shields.io/github/v/release/mashukui/xhs_one_spider?style=flat)](https://github.com/mashukui/xhs_one_spider/releases) [![Last Update](https://img.shields.io/github/release-date/mashukui/xhs_one_spider?style=flat)](https://github.com/mashukui/xhs_one_spider/releases) ![Platform](https://img.shields.io/badge/Platform-Windows%20%7C%20macOS-blue?style=flat)
+
+</div>
 
 > 🔥 Xiaohongshu data collection tool / Xiaohongshu crawler GUI, supporting note collection, comment collection, creator profile note collection, image download, CSV export, and link conversion.
 >
@@ -39,7 +45,7 @@ It is suitable for the following scenarios:
 1. Open [Releases](https://github.com/mashukui/xhs_one_spider/releases/) and download the latest version.
 2. Extract the package and run the client for your operating system.
 3. Use the built-in cookie helper to configure your cookie.
-4. Log in to the software account.
+4. Log in to the software account (no account yet? [Day pass from 19 CNY, instant activation](#-pricing)).
 5. Select a collection module and enter a keyword, note link, or creator profile link.
 6. Click "Start" and wait for the collection task to finish.
 7. Check the CSV files, image files, and log files in the software directory.
@@ -57,47 +63,47 @@ It is suitable for the following scenarios:
 
 Comment collection interface:
 
-![Comment collection interface](https://files.mdnice.com/user/32110/ee04956a-fc9f-43f5-b115-19c8cd0a0e86.jpg)
+![Comment collection interface](docs/images/readme/xhs_01.jpg)
 
 Search note result:
 
-![Search notes CSV](https://files.mdnice.com/user/32110/5a5e5f6c-786f-4549-94a4-70964b49be79.png)
+![Search notes CSV](docs/images/readme/xhs_02.png)
 
 Comment collection result:
 
-![Comments CSV](https://files.mdnice.com/user/32110/5ce3064c-832a-4ee0-ac85-0ce7abba145f.png)
+![Comments CSV](docs/images/readme/xhs_03.png)
 
 Automatically downloaded search note images:
 
-![Search note images](https://files.mdnice.com/user/32110/f8a10524-685b-460f-8c74-5f1431bfe4d8.png)
+![Search note images](docs/images/readme/xhs_04.png)
 
 ### Creator Profile Note Collection
 
 Creator profile note collection interface:
 
-![Creator profile note collection interface](https://files.mdnice.com/user/32110/0b970c66-ae38-4185-821e-f1640e9ff6a2.jpg)
+![Creator profile note collection interface](docs/images/readme/xhs_05.jpg)
 
 Creator profile note result:
 
-![Creator profile notes CSV](https://files.mdnice.com/user/32110/4fea9e53-79e9-4490-9496-32c7f408afa5.png)
+![Creator profile notes CSV](docs/images/readme/xhs_06.png)
 
 Automatically downloaded creator profile note images:
 
-![Creator profile note images](https://files.mdnice.com/user/32110/4dcf4e6a-f770-4a33-95ee-db170078aa57.png)
+![Creator profile note images](docs/images/readme/xhs_07.png)
 
 ### Link and uid Conversion
 
 Convert a profile link to a Xiaohongshu ID:
 
-![Convert profile link to Xiaohongshu ID](https://files.mdnice.com/user/32110/868991d4-9b63-4479-a9e1-dffc562f87ac.jpg)
+![Convert profile link to Xiaohongshu ID](docs/images/readme/xhs_08.jpg)
 
 Convert a Xiaohongshu ID to a profile link:
 
-![Convert Xiaohongshu ID to profile link](https://files.mdnice.com/user/32110/aed92d65-f305-4ac2-9a20-ccd06e5e49d6.jpg)
+![Convert Xiaohongshu ID to profile link](docs/images/readme/xhs_09.jpg)
 
 Convert a mobile app note link to a PC note link:
 
-![Convert app note link to PC note link](https://files.mdnice.com/user/32110/7faa66a9-5c2e-420b-85b4-f7a92796dd6d.jpg)
+![Convert app note link to PC note link](docs/images/readme/xhs_10.jpg)
 
 ## 📊 Output Fields
 
@@ -173,11 +179,29 @@ Purchase page: [https://mgnb.pro/product/xhs](https://mgnb.pro/product/xhs)
 
 ## 🔐 License and Activation Rules
 
-- The software uses a one-device-one-license mechanism. One license key can only be used on one computer.
+- The software uses account and password login (a phone number and password are provided after purchase). One account can only be used on one computer.
 - Only one software instance is allowed on a single computer. Multiple concurrent instances are not supported.
 - The software is maintained by the author, and future versions will be published through GitHub Releases.
 
+## 🕒 Changelog
+
+| Version | Date | Notes |
+|---|---|---|
+| v1.5 | 2026-07-22 | Added watermark-free video download (search / note link / profile homepage); new fields for link conversion |
+| v1.4 | 2026-06-13 | Adapted to the latest API protocol; added cookie rotation; fixed lag in xhs ID to uid conversion |
+| v1.3 | 2026-03-24 | Added new user registration entry |
+
+> For the full release history, see [Releases](https://github.com/mashukui/xhs_one_spider/releases)
+
 ## ❓ FAQ
+
+### Can I use the software after changing computers or reinstalling the system?
+
+Yes. Activation is bound to one computer per account. To switch devices, contact the [WeChat official account 老男孩的平凡之路](https://github.com/mashukui/mashukui/blob/main/wechat2.png) and request unbinding; after that you can log in on the new computer.
+
+### Do I need to purchase again for software updates?
+
+No. During the license period, all future versions are freely available on [GitHub Releases](https://github.com/mashukui/xhs_one_spider/releases). Just download the latest version and reinstall.
 
 ### Do I need to install Python?
 
@@ -230,3 +254,10 @@ Users are solely responsible for risks and liabilities caused by improper use.
 - Reply in the WeChat official account: `小红书`
 
 <img width="573" height="196" alt="二维码-公众号放底部v4" src="https://github.com/user-attachments/assets/9ad83e33-0029-433c-b2b2-6ca47e2f61eb" />
+
+
+---
+
+<p align="center">
+More collection tools (Douyin / Xiaohongshu / Weibo / PGY / YouTube, 7 in total): <a href="https://mgnb.pro">马哥数据采集工坊 (mgnb.pro)</a>
+</p>

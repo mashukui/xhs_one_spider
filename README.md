@@ -1,4 +1,10 @@
+<div align="center">
+
 # xhs_one_spider
+
+[![Release](https://img.shields.io/github/v/release/mashukui/xhs_one_spider?style=flat)](https://github.com/mashukui/xhs_one_spider/releases) [![最近更新](https://img.shields.io/github/release-date/mashukui/xhs_one_spider?style=flat)](https://github.com/mashukui/xhs_one_spider/releases) ![平台](https://img.shields.io/badge/%E5%B9%B3%E5%8F%B0-Windows%20%7C%20macOS-blue?style=flat)
+
+</div>
 
 > 🔥 小红书数据采集工具 / Xiaohongshu crawler GUI，支持小红书笔记采集、评论采集、博主主页采集、图片下载、CSV 导出和链接转换。
 >
@@ -39,7 +45,7 @@
 1. 打开 [Releases](https://github.com/mashukui/xhs_one_spider/releases/) 下载最新版软件。
 2. 解压后运行对应系统的客户端。
 3. 使用软件内置的 cookie 小工具完成 cookie 配置。
-4. 登录软件账号。
+4. 登录软件账号（还没账号？[日卡 19 元起，支付秒开通](#-价格说明)）。
 5. 选择采集模块，填写关键词、笔记链接或博主主页链接。
 6. 点击「开始执行」，等待采集完成。
 7. 在软件所在目录查看 CSV、图片文件和日志文件。
@@ -57,47 +63,47 @@
 
 采集评论界面：
 
-![采集评论界面](https://files.mdnice.com/user/32110/ee04956a-fc9f-43f5-b115-19c8cd0a0e86.jpg)
+![采集评论界面](docs/images/readme/xhs_01.jpg)
 
 搜索笔记结果：
 
-![搜索笔记.csv](https://files.mdnice.com/user/32110/5a5e5f6c-786f-4549-94a4-70964b49be79.png)
+![搜索笔记.csv](docs/images/readme/xhs_02.png)
 
 评论采集结果：
 
-![评论.csv](https://files.mdnice.com/user/32110/5ce3064c-832a-4ee0-ac85-0ce7abba145f.png)
+![评论.csv](docs/images/readme/xhs_03.png)
 
 自动下载的搜索笔记图片：
 
-![搜索笔记图片](https://files.mdnice.com/user/32110/f8a10524-685b-460f-8c74-5f1431bfe4d8.png)
+![搜索笔记图片](docs/images/readme/xhs_04.png)
 
 ### 博主笔记采集
 
 博主笔记采集界面：
 
-![采集主页笔记页面](https://files.mdnice.com/user/32110/0b970c66-ae38-4185-821e-f1640e9ff6a2.jpg)
+![采集主页笔记页面](docs/images/readme/xhs_05.jpg)
 
 博主笔记结果：
 
-![主页笔记.csv](https://files.mdnice.com/user/32110/4fea9e53-79e9-4490-9496-32c7f408afa5.png)
+![主页笔记.csv](docs/images/readme/xhs_06.png)
 
 自动下载的博主笔记图片：
 
-![主页笔记图片](https://files.mdnice.com/user/32110/4dcf4e6a-f770-4a33-95ee-db170078aa57.png)
+![主页笔记图片](docs/images/readme/xhs_07.png)
 
 ### 链接与 uid 转换
 
 主页链接转小红书号：
 
-![转换功能1：主页链接转xhs号](https://files.mdnice.com/user/32110/868991d4-9b63-4479-a9e1-dffc562f87ac.jpg)
+![转换功能1：主页链接转xhs号](docs/images/readme/xhs_08.jpg)
 
 小红书号转主页链接：
 
-![转换功能2：xhs号转主页链接（含uid）](https://files.mdnice.com/user/32110/aed92d65-f305-4ac2-9a20-ccd06e5e49d6.jpg)
+![转换功能2：xhs号转主页链接（含uid）](docs/images/readme/xhs_09.jpg)
 
 App 端笔记链接转 PC 端笔记链接：
 
-![转换功能3：app端作品链接转pc端作品链接](https://files.mdnice.com/user/32110/7faa66a9-5c2e-420b-85b4-f7a92796dd6d.jpg)
+![转换功能3：app端作品链接转pc端作品链接](docs/images/readme/xhs_10.jpg)
 
 ## 📊 输出字段
 
@@ -177,7 +183,25 @@ App 端笔记链接转 PC 端笔记链接：
 - 一台电脑仅允许运行一个软件实例，不支持多开。
 - 软件由作者长期维护，后续版本通过 [GitHub Releases](https://github.com/mashukui/xhs_one_spider/releases/) 发布。
 
+## 🕒 更新日志
+
+| 版本 | 发布日期 | 更新内容 |
+|---|---|---|
+| v1.5 | 2026-07-22 | 新增无水印视频下载（搜索/笔记链接/博主主页三种场景）；链接转换新增字段 |
+| v1.4 | 2026-06-13 | 适配最新接口协议；新增 cookie 轮换，采集更持久；修复小红书号转 uid 卡顿 |
+| v1.3 | 2026-03-24 | 新增用户注册入口 |
+
+> 完整更新历史见 [Releases](https://github.com/mashukui/xhs_one_spider/releases)
+
 ## ❓ 常见问题
+
+### 换电脑或重装系统后还能用吗？
+
+可以。授权采用一机一码，一个账号绑定一台电脑；如需更换设备，请联系[公众号「老男孩的平凡之路」](https://github.com/mashukui/mashukui/blob/main/wechat2.png)后台申请解绑，处理后即可在新电脑登录使用。
+
+### 软件更新需要重新购买吗？
+
+不需要。授权有效期内，后续版本均通过 [GitHub Releases](https://github.com/mashukui/xhs_one_spider/releases) 免费更新，下载最新版覆盖安装即可。
 
 ### 是否需要安装Python？
 
@@ -229,3 +253,10 @@ cookie用于让软件以当前账号状态访问平台数据。请使用自己�
 - 公众号 `老男孩的平凡之路` 后台回复 `小红书`
 
 <img width="573" height="196" alt="二维码-公众号放底部v4" src="https://github.com/user-attachments/assets/51032c07-acf8-47ad-9d6d-c567e16b793d" />
+
+
+---
+
+<p align="center">
+更多采集工具（抖音 / 小红书 / 微博 / 蒲公英 / 油管等 7 款）：<a href="https://mgnb.pro">马哥数据采集工坊</a>
+</p>
