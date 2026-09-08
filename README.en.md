@@ -2,7 +2,7 @@
 
 # xhs_one_spider
 
-[![Release](https://img.shields.io/github/v/release/mashukui/xhs_one_spider?style=flat)](https://github.com/mashukui/xhs_one_spider/releases) [![Last Update](https://img.shields.io/github/release-date/mashukui/xhs_one_spider?style=flat)](https://github.com/mashukui/xhs_one_spider/releases) ![Platform](https://img.shields.io/badge/Platform-Windows%20%7C%20macOS-blue?style=flat)
+[![Release](https://img.shields.io/github/v/release/mashukui/xhs_one_spider?style=flat)](https://github.com/mashukui/xhs_one_spider/releases) [![Downloads](https://img.shields.io/github/downloads/mashukui/xhs_one_spider/total?style=flat&label=Downloads)](https://github.com/mashukui/xhs_one_spider/releases) [![Last Update](https://img.shields.io/github/release-date/mashukui/xhs_one_spider?style=flat)](https://github.com/mashukui/xhs_one_spider/releases) ![Platform](https://img.shields.io/badge/Platform-Windows%20%7C%20macOS-blue?style=flat)
 
 </div>
 
