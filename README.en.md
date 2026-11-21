@@ -187,6 +187,7 @@ Purchase page: [https://mgnb.pro/product/xhs](https://mgnb.pro/product/xhs)
 
 | Version | Date | Notes |
 |---|---|---|
+| v1.5a3 | 2026-11-04 | Fixed the mp4 download issue; fixed duplicated log entries; improved collection logic and stability |
 | v1.5 | 2026-07-22 | Added watermark-free video download (search / note link / profile homepage); new fields for link conversion |
 | v1.4 | 2026-06-13 | Adapted to the latest API protocol; added cookie rotation; fixed lag in xhs ID to uid conversion |
 | v1.3 | 2026-03-24 | Added new user registration entry |
